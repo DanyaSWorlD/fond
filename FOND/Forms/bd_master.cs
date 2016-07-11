@@ -64,6 +64,7 @@ namespace FOND
                 panel1.Controls.Clear();
                 panel1.Controls.Add(pages[pInd]);
             }
+            else
             pages[pInd].load();
         }
 
@@ -76,12 +77,15 @@ namespace FOND
         {
             var pInd = Array.IndexOf(pages, panel1.Controls[0]);
             var continue_ok = pages[pInd].workerBack();
-            pages[pInd].load();
             if (continue_ok == true)
             {
+                pages[pInd-1].load();
                 panel1.Controls.Clear();
                 panel1.Controls.Add(pages[pInd - 1]);
-
+            }
+            else
+            {
+                pages[pInd].load();
             }
         }
 

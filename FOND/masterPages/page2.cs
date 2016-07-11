@@ -61,7 +61,6 @@ namespace FOND.masterPages
                 mstr.nextButton(false);
             }
         }
-
         override public bool worker()
         {
 
