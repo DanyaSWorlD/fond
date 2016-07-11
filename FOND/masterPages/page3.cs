@@ -11,7 +11,7 @@ using FOND.Properties;
 
 namespace FOND.masterPages
 {
-    public partial class page3 : UserControl
+    public partial class page3 : MasterPage
     {
         private TextBox[] tm;
         private string[] type;
@@ -24,7 +24,7 @@ namespace FOND.masterPages
             mstr.nextButton(false);
             tm = new TextBox[] { TvCentr, TvReg, RadCentr, RadReg, GazCentr, GazReg, internet };
         }
-        public bool worker()
+        override public bool worker()
         {
             mstr.nextButton(false);
             comm = new SQLiteCommand("SELECT name FROM sqlite_master WHERE type = 'table' AND name  = 'smi'", bd_master.conn);
@@ -56,7 +56,7 @@ namespace FOND.masterPages
             return true;
 
                     }
-        public bool workerback()
+        override public bool workerBack()
         {
             foreach(TextBox tb in tm)
             {
@@ -64,7 +64,7 @@ namespace FOND.masterPages
             }
             return true;
         }
-        public void load()
+        override public void load()
         {
             if (Settings.Default.db_file_dir != "" && Settings.Default.db_file_dir != null)
             {

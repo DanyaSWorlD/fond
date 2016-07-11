@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data.SQLite;
-using System.Resources;
-using System.Configuration;
 using Common;
 using System.IO;
-using System.Windows.Forms;
 using FOND.Properties;
 
 namespace FOND.masterPages
 {
-    public partial class page1 : UserControl
+    public partial class page1 : MasterPage
     {
         private lastlog lg;
         public Common.master mstr = new master();
@@ -68,7 +64,7 @@ namespace FOND.masterPages
                     break;
             }
         }
-        public bool worker()
+        override public bool worker()
         {
             if (radioButton1.Checked == true)
             {
@@ -113,6 +109,10 @@ namespace FOND.masterPages
         public void loaddbdir(string inp)
         {
             textBox1.Text = inp;
+        }
+        override public bool workerBack()
+        {
+            return false;
         }
     }
 }

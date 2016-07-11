@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace FOND.masterPages
 {
     
-    public partial class pageend : UserControl
+    public partial class pageend :  MasterPage
     {
         private SQLiteCommand comm;
         private lastlog lg = new lastlog();
@@ -18,7 +18,7 @@ namespace FOND.masterPages
         {
             InitializeComponent();
         }
-       public bool workerback()
+       override public bool workerBack()
     {
         return true;
     }
@@ -57,6 +57,10 @@ namespace FOND.masterPages
             }
             return true;
         }
+        override public bool worker()
+            {
+                return false;
+            } 
     }
     
 }

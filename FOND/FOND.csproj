@@ -160,6 +160,9 @@
     <Compile Include="Forms\smi_inp.Designer.cs">
       <DependentUpon>smi_inp.cs</DependentUpon>
     </Compile>
+    <Compile Include="masterPages\MasterPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="masterPages\page1.cs">
       <SubType>UserControl</SubType>
     </Compile>
