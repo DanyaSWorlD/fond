@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Data.Common;
-using FOND.Properties;
 using System.Data.SQLite;
-using System.Windows.Forms;
 using Common;
 using System.Data;
+using System.Collections;
+using System.Windows.Forms;
 
 namespace FOND.masterPages
 {
-    public partial class page2 : UserControl
+    public partial class page2 : MasterPage
     {
         private string[] titles = new string[] { "ответственных сотрудников", "направленностей материала", "тем материалов", "видов материала", "качества материала", "видов выступления", "категорий выступающих", "райнов и пригородов вашего города", "подразделений участников" };
         private string[] tnames = new string[] { "workers", "materialway", "material_theme", "material_presentation", "quality", "type", "speakerlvl", "regions", "parts" };
@@ -25,7 +22,7 @@ namespace FOND.masterPages
             InitializeComponent();
             этап = 0;
         }
-        public void load()
+        override public void load()
         {
             if (этап == 9)
             {
@@ -64,33 +61,68 @@ namespace FOND.masterPages
                 mstr.nextButton(false);
             }
         }
-
-        public bool worker()
+        override public bool worker()
         {
 
             result = textBox1.Lines;
             comm = new SQLiteCommand("SELECT name FROM sqlite_master WHERE type = 'table' AND name  = '" + tnames[этап] + "'", bd_master.conn);
             SQLiteDataReader dr = comm.ExecuteReader();
-            if (dr.StepCount > 0)
-            {
-
-                comm = new SQLiteCommand("DELETE FROM " + tnames[этап], bd_master.conn);
-                comm.ExecuteNonQuery();
-            }
-            else
+            if (dr.StepCount == 0)
             {
                 comm = new SQLiteCommand("CREATE TABLE `" + tnames[этап] + "`  (`value` TEXT NOT NULL , `id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE ); ", bd_master.conn);
                 comm.ExecuteNonQuery();
             }
 
-            for (var i = 0; i < result.Length; i++)
+            ArrayList toDelete = new ArrayList();
+            comm = new SQLiteCommand("SELECT * FROM " + tnames[этап] + " ;", bd_master.conn);
+            dr = comm.ExecuteReader();
+            foreach (DbDataRecord ddr in dr)
             {
-                if (result[i] != "")
+                toDelete.Add(ddr["value"]);
+            }
+            foreach (string st in result)
+            {
+                if (st != "")
+                    if (toDelete.Contains(st))
+                    {
+                        toDelete.Remove(st);
+                    }
+                    else
+                    {
+                        comm = new SQLiteCommand("INSERT INTO " + tnames[этап] + "  ( value ) VALUES ('" + st + "')", bd_master.conn);
+                        comm.ExecuteNonQuery();
+                    }
+            }
+            if (toDelete.Count > 0)
+            {
+                DialogResult rez = MessageBox.Show("Вы собираетесь удалить несколько строк из этой таблицы. Если есть карточки, в которых задействованы удаляемые данные, то они будут отображаться некорректно. Удаление необратимо.", "Внимание", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (rez == DialogResult.OK)
                 {
-                    comm = new SQLiteCommand("INSERT INTO " + tnames[этап] + "  ( value ) VALUES ('" + result[i] + "')", bd_master.conn);
+                    string request = "";
+                    int num = 0;
+                    foreach (string st in toDelete)
+                    {
+                        if (num == 0)
+                        {
+                            request += "'" + st + "'";
+                        }
+                        else
+                        {
+                            request += " or value = '" + st + "'";
+
+                        }
+                        num++;
+                    }
+                    comm = new SQLiteCommand("DELETE FROM " + tnames[этап] + " where value = " + request + ";", bd_master.conn);
                     comm.ExecuteNonQuery();
                 }
+                else
+                {
+                    textBox1.Text = "";
+                    return false;
+                }
             }
+
             textBox1.Text = "";
             mstr.nextButton(false);
             этап++;
@@ -104,7 +136,7 @@ namespace FOND.masterPages
             }
 
         }
-        public bool workerBack()
+        override public bool workerBack()
         {
             if (этап == 0)
             {

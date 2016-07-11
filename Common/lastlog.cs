@@ -36,6 +36,7 @@ namespace Common
             {
                 Log = Log.Insert(0, DateTime.Now.ToLongTimeString().ToString() + " " + log + "\r\n");
             }
+            OnUpdate();
         }
         /// <summary>
         /// Срабатывает при обновлении

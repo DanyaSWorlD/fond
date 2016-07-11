@@ -15,7 +15,7 @@ namespace FOND
         public static SQLiteConnection conn;
 
         public master mstr = new master();
-        private Control[] pages = new Control[] { new page1(), new page2(), new page3(), new pageend() };
+        private MasterPage[] pages = new MasterPage[] { new page1(), new page2(), new page3(), new pageend() };
         public bool endwconfim;
         public bd_master()
         {
@@ -51,35 +51,21 @@ namespace FOND
                     cancB.Text = "готово";
                 }
             }
-            
+
         }
         private void button3_Click(object sender, EventArgs e)
         {
             var pInd = Array.IndexOf(pages, panel1.Controls[0]);
-            var continue_ok = false;
-            switch (pInd)
-            {
-                case 0:
-                    continue_ok = (pages[pInd] as page1).worker();
-                    break;
-                case 1:
-                    continue_ok = (pages[pInd] as page2).worker();
-                    break;
-                case 2:
-                    continue_ok = (pages[pInd] as page3).worker();
-                    break;
-            }
+            var continue_ok = pages[pInd].worker();
             if (continue_ok == true)
             {
-                if (pInd == 1)
-                {
-                    (pages[2] as page3).load();
-                }
+                pInd++;
+                pages[pInd].load();
                 panel1.Controls.Clear();
-                panel1.Controls.Add(pages[pInd + 1]);
+                panel1.Controls.Add(pages[pInd]);
             }
-            bm_load();
-
+            else
+            pages[pInd].load();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -90,30 +76,16 @@ namespace FOND
         private void bacbB_Click(object sender, EventArgs e)
         {
             var pInd = Array.IndexOf(pages, panel1.Controls[0]);
-            var continue_ok = false;
-            switch (pInd)
-            {
-                case 0:
-                    continue_ok = (pages[pInd] as page1).worker();
-                    break;
-                case 1:
-                    continue_ok = (pages[pInd] as page2).workerBack();
-                    break;
-                case 2:
-                    continue_ok = (pages[pInd] as page3).workerback();
-                    bm_load();
-                    break;
-                case 3:
-                    continue_ok = (pages[pInd] as pageend).workerback();
-                    break;
-
-            }
-
+            var continue_ok = pages[pInd].workerBack();
             if (continue_ok == true)
             {
+                pages[pInd-1].load();
                 panel1.Controls.Clear();
                 panel1.Controls.Add(pages[pInd - 1]);
-
+            }
+            else
+            {
+                pages[pInd].load();
             }
         }
 
@@ -123,7 +95,7 @@ namespace FOND
             var pind = Array.IndexOf(pages, panel1.Controls[0]);
             if (pind == 3)
             {
-               endwconfim = (pages[pind] as pageend).enderer();
+                endwconfim = (pages[pind] as pageend).enderer();
                 this.Close();
             }
             else
@@ -146,12 +118,6 @@ namespace FOND
             {
                 e.Cancel = false;
             }
-        }
-
-        private void bm_load()
-        {
-            (pages[1] as page2).load();
-
         }
 
         private void bd_master_FormClosed(object sender, FormClosedEventArgs e)
