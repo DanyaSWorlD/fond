@@ -19,7 +19,7 @@ namespace FOND
         {
             InitializeComponent();
             button9.Image = new Bitmap(Properties.Resources.s_ico1, new Size(button9.ClientRectangle.Width - 7, button9.ClientRectangle.Height - 7));
-            lg.add(Application.CompanyName + " || FOND™ Copyright © 2015-2016 все права защищены || версия продукта: " + Application.ProductVersion);
+            lg.add(Application.CompanyName + " || FOND™ Copyright © 2015-" + DateTime.Now.Year + " все права защищены || версия продукта: " + Application.ProductVersion);
         }
         private void MainForm_Shown(object sender, EventArgs e)
         {

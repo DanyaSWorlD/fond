@@ -80,6 +80,26 @@ namespace FOND.masterPages
             {
                 toDelete.Add(ddr["value"]);
             }
+            ArrayList check = new ArrayList();
+            for(int i = 0; i < result.Length; i ++)
+            {
+                check.Add(new stringnid(i, result[i]));
+            }
+            while(check.Count>0)
+            {
+                stringnid p = (stringnid)check[0];
+                check.Remove(p);
+                while (true)
+                {
+                    if (check.Contains(p))
+                    {
+                        p = (stringnid)check[check.IndexOf(p)];
+                        result[p.id] = "";
+                        check.Remove(p);
+                    }
+                    else break;
+                }
+            }
             foreach (string st in result)
             {
                 if (st != "")
@@ -156,6 +176,32 @@ namespace FOND.masterPages
             else
             {
                 mstr.nextButton(false);
+            }
+        }
+        private  struct stringnid
+        {
+            public int id;
+            public string value;
+            public stringnid(int _id, string _value)
+            {
+                id = _id;
+                value = _value;
+            }
+            public override bool Equals(object obj)
+            {
+                if (obj != null && obj.GetType() == typeof(stringnid))
+                {
+                    if (((stringnid)obj).value == value)
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
+                else return false;
+            }
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
             }
         }
     }

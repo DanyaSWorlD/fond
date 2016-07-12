@@ -36,12 +36,14 @@ namespace FOND.Forms
             foreach (DbDataRecord ddr in dr)
             {
                 var smi = ddr["smi"].ToString();
-                if (ddr["times"].ToString() != "")
                     textBox1.Text = ddr["times"].ToString();
-                if (ddr["times"].ToString() != "")
                     textBox2.Text = ddr["link"].ToString();
                 if (ddr["date"].ToString() != "")
                     dateTimePicker1.Value = DateTime.Parse(ddr["date"].ToString());
+                if (ddr["pu"].ToString() == "")
+                    checkBox1.Checked = false;
+                else
+                    checkBox1.Checked = true;
                 comm = new SQLiteCommand("SELECT * FROM smi WHERE id = " + smi, conn);
                 SQLiteDataReader dr2 = comm.ExecuteReader();
                 foreach (DbDataRecord ddr2 in dr2)
@@ -108,7 +110,7 @@ namespace FOND.Forms
                 if (isupdate)
                 {
 
-                    SQLiteCommand comm = new SQLiteCommand("UPDATE `card_in_smi` SET `cards_num` = " + id + ",`smi` = " + itm.number + ",`date` = '" + dateTimePicker1.Value.ToString("yyyy-MM-dd") + "',`times` = '" + textBox1.Text + "',`link` = '" + textBox2.Text + "' WHERE id = " + cisid + ";", conn);
+                    SQLiteCommand comm = new SQLiteCommand("UPDATE `card_in_smi` SET `cards_num` = " + id + ",`smi` = " + itm.number + ",`date` = '" + dateTimePicker1.Value.ToString("yyyy-MM-dd") + "',`times` = '" + textBox1.Text + "',`link` = '" + textBox2.Text + "',`pu` = '" + (checkBox1.Checked == true ? "true" : "") + "' WHERE id = " + cisid + ";", conn);
                     comm.ExecuteNonQuery();
                     conn.Close();
                     this.Close();
@@ -125,7 +127,7 @@ namespace FOND.Forms
                     }
                     if (col == 0)
                     {
-                        comm = new SQLiteCommand("INSERT INTO `card_in_smi`(`cards_num`,`smi`,`date`,`times`,`link`) VALUES(" + id + ", " + itm.number + ", '" + dateTimePicker1.Value.ToString("yyyy-MM-dd") + "', '" + textBox1.Text + "','" + textBox2.Text + "');", conn);
+                        comm = new SQLiteCommand("INSERT INTO `card_in_smi`(`cards_num`,`smi`,`date`,`times`,`link`,`pu`) VALUES(" + id + ", " + itm.number + ", '" + dateTimePicker1.Value.ToString("yyyy-MM-dd") + "', '" + textBox1.Text + "','" + textBox2.Text + "','" + (checkBox1.Checked == true ? "true" : "") + "');", conn);
                         comm.ExecuteNonQuery();
                         conn.Close();
                         this.Close();

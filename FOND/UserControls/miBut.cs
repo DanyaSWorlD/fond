@@ -14,6 +14,10 @@ namespace FOND.UserControls
     {
         [Browsable(true)]
         public override Image BackgroundImage { get; set; }
+        [Browsable(true)]
+        public int ImagePaddingHorisontal { get; set; }
+        [Browsable(true)]
+        public int ImagePaddingVertical { get; set; }
         public miBut()
         {
             InitializeComponent();
@@ -29,6 +33,8 @@ namespace FOND.UserControls
         }
         protected void OnCreate()
         {
+            FlatAppearance.MouseDownBackColor = Color.Gray;
+            FlatAppearance.MouseOverBackColor = Color.LightBlue;
             FlatAppearance.BorderSize = 0;
             FlatStyle = FlatStyle.Flat;
             Text = "";
@@ -39,30 +45,18 @@ namespace FOND.UserControls
             try
             {
                 if(Image == null)
-                Image = new Bitmap(BackgroundImage, new Size(ClientRectangle.Width - Padding.Horizontal, ClientRectangle.Height - Padding.Vertical));
+                Image = new Bitmap(BackgroundImage, new Size(ClientRectangle.Width - ImagePaddingHorisontal - FlatAppearance.BorderSize, ClientRectangle.Height - ImagePaddingVertical - FlatAppearance.BorderSize));
             }
             catch (Exception e) { Console.WriteLine(e.Message); }
             base.OnPaint(pevent);
         }
-        protected override void OnMouseEnter(EventArgs e)
-        {
-            base.OnMouseEnter(e);
-            FlatAppearance.BorderColor = Color.LightBlue;
-            FlatAppearance.BorderSize +=1;
-        }
-        protected override void OnMouseLeave(EventArgs e)
-        {
-            base.OnMouseLeave(e);
-            
-            FlatAppearance.BorderColor = Color.Gray;
-            FlatAppearance.BorderSize -=1;
-        }
+
         protected override void OnBackgroundImageChanged(EventArgs e)
         {
             base.OnBackgroundImageChanged(e);
             try
             {
-                Image = new Bitmap(BackgroundImage, new Size(ClientRectangle.Width - Padding.Horizontal, ClientRectangle.Height - Padding.Vertical));
+                Image = new Bitmap(BackgroundImage, new Size(ClientRectangle.Width - Padding.Horizontal - FlatAppearance.BorderSize, ClientRectangle.Height - Padding.Vertical - FlatAppearance.BorderSize));
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
