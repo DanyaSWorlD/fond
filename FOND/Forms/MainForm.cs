@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Media;
 using System.Data.Common;
 using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Common;
+using FOND.Forms;
 
 namespace FOND
 {
@@ -123,6 +120,29 @@ namespace FOND
         private void miBut1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            bool exist = false;
+            for(int i = 0; i < OwnedForms.Length; i ++)
+            {
+                if(OwnedForms[i].GetType() == typeof(report_maker))
+                {
+                    exist = true;
+                }
+            }
+
+            if (!exist)
+            {
+                report_maker rm = new report_maker(ReportType.way);
+                rm.Owner = this;
+                rm.Show();
+            }
+            else
+            {
+                MessageBox.Show( "Данная форма уже открыта. Нельзя создавать более 1 формы одновременно", "Ошибка",MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

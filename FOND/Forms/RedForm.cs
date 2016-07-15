@@ -1105,6 +1105,17 @@ namespace FOND
 
         }
 
+        private void miBut1_Click(object sender, EventArgs e)
+        {
+            var r = MessageBox.Show("Удалить?", "Удаление карточки", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (r == DialogResult.Yes)
+            {
+                SQLiteCommand comm = new SQLiteCommand("DELETE FROM cards WHERE id = " + id + ";", conn);
+                comm.ExecuteNonQuery();
+                changeid(1, 1);
+            }
+        }
+
         #endregion
 
         #endregion

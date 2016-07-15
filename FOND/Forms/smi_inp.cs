@@ -102,49 +102,54 @@ namespace FOND.Forms
 
         private void button3_Click(object sender, EventArgs e)
         {
-            SQLiteConnection conn = new SQLiteConnection(string.Format("Data Source = {0};", Properties.Settings.Default.db_file_dir));
-            var itm = (comboBox3.SelectedItem as combovalue);
-            if (itm != null)
+            try
             {
-                conn.Open();
-                if (isupdate)
+                SQLiteConnection conn = new SQLiteConnection(string.Format("Data Source = {0};", Properties.Settings.Default.db_file_dir));
+                var itm = (comboBox3.SelectedItem as combovalue);
+                if (itm != null)
                 {
-
-                    SQLiteCommand comm = new SQLiteCommand("UPDATE `card_in_smi` SET `cards_num` = " + id + ",`smi` = " + itm.number + ",`date` = '" + dateTimePicker1.Value.ToString("yyyy-MM-dd") + "',`times` = '" + textBox1.Text + "',`link` = '" + textBox2.Text + "',`pu` = '" + (checkBox1.Checked == true ? "true" : "") + "' WHERE id = " + cisid + ";", conn);
-                    comm.ExecuteNonQuery();
-                    conn.Close();
-                    this.Close();
-
-                }
-                else
-                {
-                    var col = 0;
-                    SQLiteCommand comm = new SQLiteCommand("SELECT * FROM `card_in_smi` WHERE cards_num = " + id + " AND smi = " + itm.number + " ;", conn);
-                    SQLiteDataReader dr = comm.ExecuteReader();
-                    foreach (DbDataRecord ddr in dr)
+                    conn.Open();
+                    if (isupdate)
                     {
-                        col++;
-                    }
-                    if (col == 0)
-                    {
-                        comm = new SQLiteCommand("INSERT INTO `card_in_smi`(`cards_num`,`smi`,`date`,`times`,`link`,`pu`) VALUES(" + id + ", " + itm.number + ", '" + dateTimePicker1.Value.ToString("yyyy-MM-dd") + "', '" + textBox1.Text + "','" + textBox2.Text + "','" + (checkBox1.Checked == true ? "true" : "") + "');", conn);
+
+                        SQLiteCommand comm = new SQLiteCommand("UPDATE `card_in_smi` SET `cards_num` = " + id + ",`smi` = " + itm.number + ",`date` = '" + dateTimePicker1.Value.ToString("yyyy-MM-dd") + "',`times` = '" + textBox1.Text + "',`link` = '" + textBox2.Text + "',`pu` = '" + (checkBox1.Checked == true ? "true" : "") + "' WHERE id = " + cisid + ";", conn);
                         comm.ExecuteNonQuery();
                         conn.Close();
                         this.Close();
+
                     }
                     else
                     {
-                        MessageBox.Show(this,"Вы пытаетесь добавить сми которая уже есть в списках этой карточки. Вы можете увеличить количество повторов в предыдущей записи.","Ошибка.",MessageBoxButtons.OK,MessageBoxIcon.Error);
-                        conn.Close();
+                        var col = 0;
+                        SQLiteCommand comm = new SQLiteCommand("SELECT * FROM `card_in_smi` WHERE cards_num = " + id + " AND smi = " + itm.number + " ;", conn);
+                        SQLiteDataReader dr = comm.ExecuteReader();
+                        foreach (DbDataRecord ddr in dr)
+                        {
+                            col++;
+                        }
+                        if (col == 0)
+                        {
+                            comm = new SQLiteCommand("INSERT INTO `card_in_smi`(`cards_num`,`smi`,`date`,`times`,`link`,`pu`) VALUES(" + id + ", " + itm.number + ", '" + dateTimePicker1.Value.ToString("yyyy-MM-dd") + "', '" + textBox1.Text + "','" + textBox2.Text + "','" + (checkBox1.Checked == true ? "true" : "") + "');", conn);
+                            comm.ExecuteNonQuery();
+                            conn.Close();
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show(this, "Вы пытаетесь добавить сми которая уже есть в списках этой карточки. Вы можете увеличить количество повторов в предыдущей записи.", "Ошибка.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            conn.Close();
+                        }
                     }
                 }
-            }
-            else
+                else
+                {
+                    MessageBox.Show("Наименование - поле обязательное для заполнения!");
+                    conn.Close();
+                }
+            }catch (Exception E)
             {
-                MessageBox.Show("Наименование - поле обязательное для заполнения!");
-                conn.Close();
+                MessageBox.Show("Ошибка!\n" + E.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
 
 
         }
