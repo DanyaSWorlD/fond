@@ -117,47 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="fst" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="help_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\help_ico.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="help_ico1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\help_ico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="image_930177" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\image_930177.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="image_930178" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\image_930178.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="lock_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\lock_ico.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="lock_ico1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\lock_ico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PixelKit_0041_5_37725" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PixelKit_0041_5_37725.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="s_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\s_ico.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="s_ico1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\s_ico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="tables" xml:space="preserve">
-    <value />
-  </data>
-  <data name="yavbttkp" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\yavbttkp.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="yavbttkp1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\yavbttkp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="_40812526" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\40812526.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

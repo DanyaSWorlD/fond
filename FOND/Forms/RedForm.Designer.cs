@@ -1050,11 +1050,14 @@ namespace FOND
             this.miBut1.FlatAppearance.BorderSize = 0;
             this.miBut1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.miBut1.Image = ((System.Drawing.Image)(resources.GetObject("miBut1.Image")));
+            this.miBut1.ImagePaddingHorisontal = 0;
+            this.miBut1.ImagePaddingVertical = 0;
             this.miBut1.Location = new System.Drawing.Point(282, 3);
             this.miBut1.Name = "miBut1";
             this.miBut1.Size = new System.Drawing.Size(24, 24);
             this.miBut1.TabIndex = 11;
             this.miBut1.UseVisualStyleBackColor = true;
+            this.miBut1.Click += new System.EventHandler(this.miBut1_Click);
             // 
             // contextMenuStrip2
             // 

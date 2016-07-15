@@ -777,7 +777,7 @@ namespace FOND
             DataGridViewColumn dgvc = new DataGridViewColumn();
             for (var i = 0; i < dar.Length; i++)
             {
-                if (dar[i].ColumnCount != 6)
+                if (dar[i].ColumnCount != 7)
                 {
                     MultyThreadChangeds(dar[i], null, 2);
                     dgvc = CreateColumn("Тип СМИ", "type", Type.GetType("System.String"), true);
@@ -789,6 +789,8 @@ namespace FOND
                     dgvc = CreateColumn("Количество повторов", "times", Type.GetType("System.String"), true);
                     MultyThreadChangeds(dar[i], dgvc, 1);
                     dgvc = CreateColumn("Файл материала", "link", Type.GetType("System.String"), true);
+                    MultyThreadChangeds(dar[i], dgvc, 1);
+                    dgvc = CreateColumn("При участии", "pu", Type.GetType("System.String"), true);
                     MultyThreadChangeds(dar[i], dgvc, 1);
                     dgvc = CreateColumn("ID СМИ", "smi_id", Type.GetType("System.String"), true);
                     dgvc.Visible = false;
@@ -899,29 +901,27 @@ namespace FOND
                             break;
                     }
                     if (where != -1)
-                        mtaddr(dgv[where], ddr2["type"].ToString(), ddr2["name"].ToString(), ddr["date"].ToString(), ddr["times"].ToString(), ddr["link"].ToString(), ddr["id"].ToString());
+                        mtaddr(dgv[where], ddr2["type"].ToString(), ddr2["name"].ToString(), ddr["date"].ToString(), ddr["times"].ToString(), ddr["link"].ToString(),ddr["pu"].ToString() == "" ? "-" : "+", ddr["id"].ToString());
                 }
             }
             MultyThreadstoploadind();
         }
-        delegate void addr(DataGridView tg, string p1, string p2, string p3, string p4, string p5, string p6);
-        private void mtaddr(DataGridView tg, string p1, string p2, string p3, string p4, string p5, string p6)
+        delegate void addr(DataGridView tg,params string[] args);
+        private void mtaddr(DataGridView tg,params string[] args)
         {
-            if (tg.InvokeRequired || tg.ColumnCount != 6)
+            if (tg.InvokeRequired || tg.ColumnCount != 7)
             {
                 addr dr = new addr(mtaddr);
-                this.Invoke(dr, new object[] { tg, p1, p2, p3, p4, p5, p6 });
+                this.Invoke(dr, new object[] { tg, args });
             }
             else
             {          
                 int zaebalsya_uze = tg.Rows.Add();
                 //lg.add("Tread debug: adding row."+Environment.NewLine+" Sys info: row_lenght:"+tg.Rows[zaebalsya_uze].Cells.Count+"; p1 = "+p1+ " p2 = " + p2 + " p3 = " + p3 + " p4 = " + p4 + " p5 = " + p5 + " p6 " + p6 + ";");
-                tg.Rows[zaebalsya_uze].Cells[0].Value = p1;
-                tg.Rows[zaebalsya_uze].Cells[1].Value = p2;
-                tg.Rows[zaebalsya_uze].Cells[2].Value = p3;
-                tg.Rows[zaebalsya_uze].Cells[3].Value = p4;
-                tg.Rows[zaebalsya_uze].Cells[4].Value = p5;
-                tg.Rows[zaebalsya_uze].Cells[5].Value = p6;
+                for(int i = 0; i < 7; i++)
+                {
+                    tg.Rows[zaebalsya_uze].Cells[i].Value = args[i];
+                }
                 tg.Rows[zaebalsya_uze].ContextMenuStrip = contextMenuStrip2;
             }
         }
@@ -964,7 +964,7 @@ namespace FOND
                 if (e.ClickedItem == CM2RED)
                 {
                     DataGridView[] dar = new DataGridView[] { dataGridView1, dataGridView2, dataGridView3 };
-                    var cisid = dar[tabControl1.SelectedIndex].Rows[rowIndex].Cells[5].Value.ToString();
+                    var cisid = dar[tabControl1.SelectedIndex].Rows[rowIndex].Cells[dar[tabControl1.SelectedIndex].Rows[rowIndex].Cells.Count-1].Value.ToString();
                     Forms.smi_inp sminp = new Forms.smi_inp(id, cisid);
                     sminp.ShowDialog();
                     pictureBox1.Visible = true;
@@ -983,7 +983,7 @@ namespace FOND
         private void CM2Delthis_Click(object sender, EventArgs e)
         {
             DataGridView[] dar = new DataGridView[] { dataGridView1, dataGridView2, dataGridView3 };
-            SQLiteCommand comm = new SQLiteCommand("DELETE FROM card_in_smi WHERE id = " + dar[tabControl1.SelectedIndex].Rows[rowIndex].Cells[5].Value.ToString(), conn);
+            SQLiteCommand comm = new SQLiteCommand("DELETE FROM card_in_smi WHERE id = " + dar[tabControl1.SelectedIndex].Rows[rowIndex].Cells[dar[tabControl1.SelectedIndex].Rows[rowIndex].Cells.Count - 1].Value.ToString(), conn);
             comm.ExecuteNonQuery();
             pictureBox1.Visible = true;
             new Thread(loadInDataGridView).Start();
@@ -995,7 +995,7 @@ namespace FOND
             DataGridView[] dar = new DataGridView[] { dataGridView1, dataGridView2, dataGridView3 };
             for (var i = 0; i < dar[tabControl1.SelectedIndex].Rows.Count; i++)
             {
-                SQLiteCommand comm = new SQLiteCommand("DELETE FROM card_in_smi WHERE id = " + dar[tabControl1.SelectedIndex].Rows[i].Cells[5].Value.ToString(), conn);
+                SQLiteCommand comm = new SQLiteCommand("DELETE FROM card_in_smi WHERE id = " + dar[tabControl1.SelectedIndex].Rows[i].Cells[dar[tabControl1.SelectedIndex].Rows[rowIndex].Cells.Count - 1].Value.ToString(), conn);
                 comm.ExecuteNonQuery();
             }
             pictureBox1.Visible = true;
@@ -1070,6 +1070,10 @@ namespace FOND
                 changeid((int)(sender as NumericUpDown).Value, 2);
                 ttchanged = false;
             }
+            if ((e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9) || (e.KeyCode >= Keys.D0 && e.KeyCode < Keys.D9) || e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            {
+                ttchanged = true;
+            }
         }
 
         private void textBox3_Leave(object sender, EventArgs e)
@@ -1099,6 +1103,17 @@ namespace FOND
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void miBut1_Click(object sender, EventArgs e)
+        {
+            var r = MessageBox.Show("Удалить?", "Удаление карточки", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (r == DialogResult.Yes)
+            {
+                SQLiteCommand comm = new SQLiteCommand("DELETE FROM cards WHERE id = " + id + ";", conn);
+                comm.ExecuteNonQuery();
+                changeid(1, 1);
+            }
         }
 
         #endregion
