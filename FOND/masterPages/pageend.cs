@@ -51,7 +51,7 @@ namespace FOND.masterPages
             }
             if (i == 0)
             {
-                comm = new SQLiteCommand("CREATE TABLE `card_in_smi` (`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,`cards_num`	INTEGER,`smi`	TEXT,`date`	TEXT,`times`	TEXT,`link`	TEXT,`pu` TEXT); ",bd_master.conn);
+                comm = new SQLiteCommand("CREATE TABLE `card_in_smi` (`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,`cards_num`	INTEGER,`smi`	TEXT,`date`	TEXT,`times`	INTEGER,`link`	TEXT,`pu` TEXT); ",bd_master.conn);
                 comm.ExecuteNonQuery();
                 return true;
             }
