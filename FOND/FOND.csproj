@@ -29,7 +29,7 @@
     <UpdateUrl>http://daquga.com/fond/updates/</UpdateUrl>
     <ProductName>FOND</ProductName>
     <PublisherName>DAQUGA studios</PublisherName>
-    <ApplicationRevision>14</ApplicationRevision>
+    <ApplicationRevision>15</ApplicationRevision>
     <ApplicationVersion>0.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -480,10 +480,10 @@
     <PublishFile Include="ru\FOND.resources">
       <Visible>False</Visible>
       <Group>картинки</Group>
-      <TargetPath>
-      </TargetPath>
       <PublishState>Auto</PublishState>
       <IncludeHash>True</IncludeHash>
+      <TargetPath>
+      </TargetPath>
       <FileType>Satellite</FileType>
     </PublishFile>
   </ItemGroup>
