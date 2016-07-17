@@ -161,6 +161,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtraForms\datePicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtraForms\datePicker.Designer.cs">
+      <DependentUpon>datePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtraForms\Eform.cs" />
+    <Compile Include="ExtraForms\wayndatePicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtraForms\wayndatePicker.Designer.cs">
+      <DependentUpon>wayndatePicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\bd_master.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -282,6 +295,9 @@
     <Compile Include="UserControls\UserControl3.Designer.cs">
       <DependentUpon>UserControl3.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ExtraForms\datePicker.resx">
+      <DependentUpon>datePicker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\bd_master.resx">
       <DependentUpon>bd_master.cs</DependentUpon>
     </EmbeddedResource>

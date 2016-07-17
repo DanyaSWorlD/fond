@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using System.Data.Common;
+using FOND.ExtraForms;
+
 
 namespace FOND.Forms
 {
@@ -22,12 +24,56 @@ namespace FOND.Forms
 
         private void report_maker_Load(object sender, EventArgs e)
         {
-
+            Form f;
+            if (thisType == ReportType.concreteness)
+            {
+                f = new wayndatePicker();
+            }
+            else
+            {
+                f = new datePicker();
+            }
+            f.Owner = this;
+            f.ShowDialog();
+            if (f.DialogResult == DialogResult.Abort)
+                Close();
+            f.Dispose();
+        }
+        public void continueWork(DateTime from, DateTime to, string checks)
+        {
             SQLiteConnection conn = new SQLiteConnection(string.Format("Data Source = {0};", Properties.Settings.Default.db_file_dir));
             conn.Open();
             if (thisType == ReportType.smi)
             {
-
+                string title = "Отчет о количестве материала по сми";
+                string HTMLpage = string.Format("<body>"+title+ "<br /><p>За периуд с " + from.ToShortDateString() + " по " + to.ToShortDateString() + "</p><br /><div class={0}row{0}><div class={0}cell{0}>Наименование СМИ</div><div class={0}cell{0}>Количество материала</div></div>", '"');    
+                try
+                {
+                    SQLiteCommand comm = new SQLiteCommand("SELECT id,name FROM smi", conn);
+                    SQLiteDataReader dr = comm.ExecuteReader();
+                    int fullCount = 0;
+                    foreach (DbDataRecord ddr in dr)
+                    {
+                        SQLiteCommand comm2 = new SQLiteCommand(" SELECT times from card_in_smi where smi = " + ddr["id"] + " and date(date) >= date('"+from.ToString("yyyy-MM-dd") + "') and date(date) <= date('"+to.ToString("yyyy-MM-dd") + "');", conn);
+                        SQLiteDataReader dr2 = comm2.ExecuteReader();
+                        int count = 0;
+                        foreach (DbDataRecord ddr2 in dr2)
+                        {
+                            int lc = (int)ddr2.GetInt64(ddr2.GetOrdinal("times"));
+                            count += lc == 0 ? 1 : lc;
+                        }
+                        HTMLpage += string.Format("<div class={0}row{0}><div class={0}cell{0}>" + ddr["name"] + "</div><div class={0}cell{0}>" + count + "</div></div>", '"');
+                        fullCount += count;
+                    }
+                    HTMLpage += string.Format("<div class={0}row{0}><div class={0}cell{0}>Итого</div><div class={0}cell{0}>" + fullCount + "</div></div>", '"');
+                    HTMLpage += "<br />Тестовый пример";
+                    HTMLpage += "</body><style>body{width:600px;} .row{width:600px;} .cell{width:49%;float:left;min-height:20px;text-align:center;border:1px solid black;}</style>";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка во время создания отчета!\n" + ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                reportViewer1.setHtml(HTMLpage);
             }
             else
             {
@@ -49,7 +95,7 @@ namespace FOND.Forms
                         title = "Отчет о тематике материала";
                         break;
                 }
-                string HTMLPage = "<head><style>body{                padding: 25px;                width: 900px;            } #row >             {" +
+                string HTMLPage = "<head><style> .bdy{                padding: 25px;                width: 900px;            } #row >             {" +
                     "display.table-cell;         } #row{            display: table;            width: 100%;        }.trya{float:left;" +
     "width:33%;font-size:small;text-align:center;} .bya{border-left:1px solid black;float:left;width:25%;text-align: center;height: 20px;" +
     "} div > .bya:first-child {width:24%;border-left:none;}div.bya:last-of-type > .trya:last-child{width:50%;border-left: 1px solid black;" +
@@ -57,14 +103,13 @@ namespace FOND.Forms
                 this.Text = title;
                 try
                 {
-
-                    HTMLPage += "<p style=" + '"' + "font-size:big; padding-left:50px;" + '"' + ">" + title + "</p><br />";
+                    HTMLPage += "<p style=" + '"' + "font-size:big; padding-left:50px;" + '"' + ">" + title + "</p><br /><p>За периуд с "+from.ToShortDateString() + " по " + to.ToShortDateString()+"</p><br />";
                     HTMLPage += string.Format("<div><div class={0}bya{0}></div><div class={0}bya{0}>ЦЕНТРАЛЬНЫЕ СМИ</div><div class={0}bya{0}>РЕГИОНАЛЬНЫЕ СМИ</div><div class={0}bya{0}></div></div><div style={0}border-top:1px solid black; border-bottom:2px solid lightblue; {0} id={0}row{0}><div class={0}bya{0}>Направленность материала</div><div class={0}bya{0}><div class={0}trya{0}>телевиденье</div><div class={0}trya{0}>радио</div><div class={0}trya{0}>печать</div></div><div class={0}bya{0}><div class={0}trya{0}>телевиденье</div><div class={0}trya{0}>радио</div><div class={0}trya{0}>печать</div></div><div class={0}bya{0}><div class={0}trya{0}style={0}width: 49% {0}>интернет</div><div class={0}trya{0} >итого</div></div></div>", '"');
                     SQLiteCommand comm = new SQLiteCommand("SELECT id,value FROM " + table + ";", conn);
                     SQLiteDataReader dr = comm.ExecuteReader();
                     dataSet ds = new dataSet();
                     ds.newRow("");
-                    SQLiteCommand comm2 = new SQLiteCommand("SELECT smi.place, smi.type from smi inner join card_in_smi, cards  ON card_in_smi.cards_num = cards.id AND smi.id = card_in_smi.smi AND cards." + table + " like '';", conn);
+                    SQLiteCommand comm2 = new SQLiteCommand("SELECT smi.place, smi.type from smi inner join card_in_smi, cards  ON card_in_smi.cards_num = cards.id AND smi.id = card_in_smi.smi AND cards." + table + " like ''  and date(card_in_smi.date) >= date('" + from.ToString("yyyy-MM-dd") + "') and date(card_in_smi.date) <= date('" + to.ToString("yyyy-MM-dd") + "');", conn);
                     SQLiteDataReader dr2 = comm2.ExecuteReader();
                     foreach (DbDataRecord ddr in dr2)
                     {
@@ -73,7 +118,7 @@ namespace FOND.Forms
                     foreach (DbDataRecord ddr in dr)
                     {
                         ds.newRow(ddr["value"].ToString());
-                        comm2 = new SQLiteCommand("SELECT smi.place, smi.type, card_in_smi.times from smi inner join card_in_smi, cards  ON card_in_smi.cards_num = cards.id AND smi.id = card_in_smi.smi AND cards." + table + " like '%" + ddr["id"] + "%';", conn);
+                        comm2 = new SQLiteCommand("SELECT smi.place, smi.type, card_in_smi.times from smi inner join card_in_smi, cards  ON card_in_smi.cards_num = cards.id AND smi.id = card_in_smi.smi AND cards." + table + " like '%" + ddr["id"] + "%' and date(card_in_smi.date) >= date('" + from.ToString("yyyy-MM-dd") + "') and date(card_in_smi.date) <= date('" + to.ToString("yyyy-MM-dd") + "');", conn);
                         dr2 = comm2.ExecuteReader();
                         foreach (DbDataRecord ddr2 in dr2)
                         {
