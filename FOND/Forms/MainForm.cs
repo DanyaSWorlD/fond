@@ -17,6 +17,7 @@ namespace FOND
             InitializeComponent();
             button9.Image = new Bitmap(Properties.Resources.s_ico1, new Size(button9.ClientRectangle.Width - 7, button9.ClientRectangle.Height - 7));
             lg.add(Application.CompanyName + " || FOND™ Copyright © 2015-" + DateTime.Now.Year + " все права защищены || версия продукта: " + Application.ProductVersion);
+            label4.Text = "v"+Application.ProductVersion;
         }
         private void MainForm_Shown(object sender, EventArgs e)
         {
@@ -122,12 +123,35 @@ namespace FOND
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void byWay_click(object sender, EventArgs e)
+        {
+            report(ReportType.way);
+        }
+        private void byExecutors_Click(object sender, EventArgs e)
+        {
+            report(ReportType.executor);
+        }
+
+        private void byTheme_Click(object sender, EventArgs e)
+        {
+            report(ReportType.theme);
+        }
+
+        private void bySmi_Click(object sender, EventArgs e)
+        {
+            report(ReportType.smi);
+        }
+
+        private void byConcreteTheme_Click(object sender, EventArgs e)
+        {
+            report(ReportType.concreteness);
+        }
+        private void report(ReportType r)
         {
             bool exist = false;
-            for(int i = 0; i < OwnedForms.Length; i ++)
+            for (int i = 0; i < OwnedForms.Length; i++)
             {
-                if(OwnedForms[i].GetType() == typeof(report_maker))
+                if (OwnedForms[i].GetType() == typeof(report_maker))
                 {
                     exist = true;
                 }
@@ -135,13 +159,13 @@ namespace FOND
 
             if (!exist)
             {
-                report_maker rm = new report_maker(ReportType.way);
+                report_maker rm = new report_maker(r);
                 rm.Owner = this;
                 rm.Show();
             }
             else
             {
-                MessageBox.Show( "Данная форма уже открыта. Нельзя создавать более 1 формы одновременно", "Ошибка",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Данная форма уже открыта. Нельзя создавать более 1 формы одновременно", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

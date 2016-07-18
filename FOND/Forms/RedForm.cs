@@ -1139,6 +1139,17 @@ namespace FOND
         {
             return this.value;
         }
+        public override bool Equals(object obj)
+        {
+            if(obj.ToString() == value)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
     #endregion
 

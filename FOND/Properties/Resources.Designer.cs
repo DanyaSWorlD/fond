@@ -142,6 +142,16 @@ namespace FOND.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap mmlwffkl {
+            get {
+                object obj = ResourceManager.GetObject("mmlwffkl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap PixelKit_0041_5_37725 {
             get {
                 object obj = ResourceManager.GetObject("PixelKit_0041_5_37725", resourceCulture);

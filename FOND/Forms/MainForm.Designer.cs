@@ -40,17 +40,18 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
+            this.byWay = new System.Windows.Forms.Button();
+            this.byTheme = new System.Windows.Forms.Button();
+            this.byConcreteTheme = new System.Windows.Forms.Button();
+            this.byExecutors = new System.Windows.Forms.Button();
+            this.bySmi = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.userControl11 = new FOND.UserControl1();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.button9 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label4 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -73,6 +74,7 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.userControl11, 3, 3);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel6, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 1, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.MinimumSize = new System.Drawing.Size(1475, 350);
@@ -189,11 +191,11 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.65973F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.784723F));
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel4, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.button3, 1, 2);
-            this.tableLayoutPanel3.Controls.Add(this.button4, 1, 4);
-            this.tableLayoutPanel3.Controls.Add(this.button5, 1, 6);
-            this.tableLayoutPanel3.Controls.Add(this.button6, 4, 2);
-            this.tableLayoutPanel3.Controls.Add(this.button7, 4, 4);
+            this.tableLayoutPanel3.Controls.Add(this.byWay, 1, 2);
+            this.tableLayoutPanel3.Controls.Add(this.byTheme, 1, 4);
+            this.tableLayoutPanel3.Controls.Add(this.byConcreteTheme, 1, 6);
+            this.tableLayoutPanel3.Controls.Add(this.byExecutors, 4, 2);
+            this.tableLayoutPanel3.Controls.Add(this.bySmi, 4, 4);
             this.tableLayoutPanel3.Controls.Add(this.button8, 4, 6);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(655, 43);
@@ -239,61 +241,65 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "ОТЧЕТЫ";
             // 
-            // button3
+            // byWay
             // 
-            this.tableLayoutPanel3.SetColumnSpan(this.button3, 2);
-            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button3.Location = new System.Drawing.Point(47, 97);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(308, 54);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "ПО НАПРАВЛЕННОСТИ";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.tableLayoutPanel3.SetColumnSpan(this.byWay, 2);
+            this.byWay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.byWay.Location = new System.Drawing.Point(47, 97);
+            this.byWay.Name = "byWay";
+            this.byWay.Size = new System.Drawing.Size(308, 54);
+            this.byWay.TabIndex = 1;
+            this.byWay.Text = "ПО НАПРАВЛЕННОСТИ";
+            this.byWay.UseVisualStyleBackColor = true;
+            this.byWay.Click += new System.EventHandler(this.byWay_click);
             // 
-            // button4
+            // byTheme
             // 
-            this.tableLayoutPanel3.SetColumnSpan(this.button4, 2);
-            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button4.Location = new System.Drawing.Point(47, 211);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(308, 54);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "ПО ТЕМАТИКЕ";
-            this.button4.UseVisualStyleBackColor = true;
+            this.tableLayoutPanel3.SetColumnSpan(this.byTheme, 2);
+            this.byTheme.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.byTheme.Location = new System.Drawing.Point(47, 211);
+            this.byTheme.Name = "byTheme";
+            this.byTheme.Size = new System.Drawing.Size(308, 54);
+            this.byTheme.TabIndex = 2;
+            this.byTheme.Text = "ПО ТЕМАТИКЕ";
+            this.byTheme.UseVisualStyleBackColor = true;
+            this.byTheme.Click += new System.EventHandler(this.byTheme_Click);
             // 
-            // button5
+            // byConcreteTheme
             // 
-            this.tableLayoutPanel3.SetColumnSpan(this.button5, 2);
-            this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button5.Location = new System.Drawing.Point(47, 325);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(308, 54);
-            this.button5.TabIndex = 3;
-            this.button5.Text = "ПО КОНКРЕТНЫМ ТЕМАМ";
-            this.button5.UseVisualStyleBackColor = true;
+            this.tableLayoutPanel3.SetColumnSpan(this.byConcreteTheme, 2);
+            this.byConcreteTheme.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.byConcreteTheme.Location = new System.Drawing.Point(47, 325);
+            this.byConcreteTheme.Name = "byConcreteTheme";
+            this.byConcreteTheme.Size = new System.Drawing.Size(308, 54);
+            this.byConcreteTheme.TabIndex = 3;
+            this.byConcreteTheme.Text = "ПО КОНКРЕТНЫМ ТЕМАМ";
+            this.byConcreteTheme.UseVisualStyleBackColor = true;
+            this.byConcreteTheme.Click += new System.EventHandler(this.byConcreteTheme_Click);
             // 
-            // button6
+            // byExecutors
             // 
-            this.tableLayoutPanel3.SetColumnSpan(this.button6, 2);
-            this.button6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button6.Location = new System.Drawing.Point(405, 97);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(308, 54);
-            this.button6.TabIndex = 4;
-            this.button6.Text = "ПО ПОДРАЗДЕЛЕНИЯМ";
-            this.button6.UseVisualStyleBackColor = true;
+            this.tableLayoutPanel3.SetColumnSpan(this.byExecutors, 2);
+            this.byExecutors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.byExecutors.Location = new System.Drawing.Point(405, 97);
+            this.byExecutors.Name = "byExecutors";
+            this.byExecutors.Size = new System.Drawing.Size(308, 54);
+            this.byExecutors.TabIndex = 4;
+            this.byExecutors.Text = "ПО ПОДРАЗДЕЛЕНИЯМ";
+            this.byExecutors.UseVisualStyleBackColor = true;
+            this.byExecutors.Click += new System.EventHandler(this.byExecutors_Click);
             // 
-            // button7
+            // bySmi
             // 
-            this.tableLayoutPanel3.SetColumnSpan(this.button7, 2);
-            this.button7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button7.Location = new System.Drawing.Point(405, 211);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(308, 54);
-            this.button7.TabIndex = 5;
-            this.button7.Text = "ПО СМИ";
-            this.button7.UseVisualStyleBackColor = true;
+            this.tableLayoutPanel3.SetColumnSpan(this.bySmi, 2);
+            this.bySmi.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bySmi.Location = new System.Drawing.Point(405, 211);
+            this.bySmi.Name = "bySmi";
+            this.bySmi.Size = new System.Drawing.Size(308, 54);
+            this.bySmi.TabIndex = 5;
+            this.bySmi.Text = "ПО СМИ";
+            this.bySmi.UseVisualStyleBackColor = true;
+            this.bySmi.Click += new System.EventHandler(this.bySmi_Click);
             // 
             // button8
             // 
@@ -362,6 +368,14 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(73, 482);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(0, 17);
+            this.label4.TabIndex = 4;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -374,6 +388,7 @@
     "онд»";
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
@@ -398,17 +413,18 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button byWay;
+        private System.Windows.Forms.Button byTheme;
+        private System.Windows.Forms.Button byConcreteTheme;
+        private System.Windows.Forms.Button byExecutors;
+        private System.Windows.Forms.Button bySmi;
         private System.Windows.Forms.Button button8;
         private UserControl1 userControl11;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label4;
     }
 }
 
