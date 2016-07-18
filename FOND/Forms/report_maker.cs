@@ -89,37 +89,44 @@ namespace FOND.Forms
                         table = "parts";
                         title = "Отчет по подразделениям";
                         break;
-                    case ReportType.theme:
+                    
                     case ReportType.concreteness:
                         table = "material_theme";
                         title = "Отчет о тематике материала";
                         break;
+                    case ReportType.theme:
+                        table = "material_theme";
+                        title = "Отчет о тематике материала";
+                        break;
                 }
-                string HTMLPage = "<head><style> .bdy{                padding: 25px;                width: 900px;            } #row >             {" +
-                    "display.table-cell;         } #row{            display: table;            width: 100%;        }.trya{float:left;" +
-    "width:33%;font-size:small;text-align:center;} .bya{border-left:1px solid black;float:left;width:25%;text-align: center;height: 20px;" +
+                string HTMLPage = "<html><head><style> #row > div   {" +
+                    "display.table-cell;         } #row{            display: table;            width: 600px;        }.trya{float:left;" +
+    "width:33%;font-size:small;text-align:center;} .bya{border-left:1px solid black;float:left;width:25%;text-align: center;min-height: 15px;" +
     "} div > .bya:first-child {width:24%;border-left:none;}div.bya:last-of-type > .trya:last-child{width:50%;border-left: 1px solid black;" +
-    "font-size:medium;}</style></head><body>";
+    "font-size:medium;}</style></head><body style=" + '"' + "padding: 25px;width: 900px;" + '"' + ">";
                 this.Text = title;
                 try
                 {
                     HTMLPage += "<p style=" + '"' + "font-size:big; padding-left:50px;" + '"' + ">" + title + "</p><br /><p>За периуд с "+from.ToShortDateString() + " по " + to.ToShortDateString()+"</p><br />";
-                    HTMLPage += string.Format("<div><div class={0}bya{0}></div><div class={0}bya{0}>ЦЕНТРАЛЬНЫЕ СМИ</div><div class={0}bya{0}>РЕГИОНАЛЬНЫЕ СМИ</div><div class={0}bya{0}></div></div><div style={0}border-top:1px solid black; border-bottom:2px solid lightblue; {0} id={0}row{0}><div class={0}bya{0}>Направленность материала</div><div class={0}bya{0}><div class={0}trya{0}>телевиденье</div><div class={0}trya{0}>радио</div><div class={0}trya{0}>печать</div></div><div class={0}bya{0}><div class={0}trya{0}>телевиденье</div><div class={0}trya{0}>радио</div><div class={0}trya{0}>печать</div></div><div class={0}bya{0}><div class={0}trya{0}style={0}width: 49% {0}>интернет</div><div class={0}trya{0} >итого</div></div></div>", '"');
-                    SQLiteCommand comm = new SQLiteCommand("SELECT id,value FROM " + table + ";", conn);
+                    HTMLPage += string.Format("<div id={0}row{0}><div class={0}bya{0}></div><div class={0}bya{0}>ЦЕНТРАЛЬНЫЕ СМИ</div><div class={0}bya{0}>РЕГИОНАЛЬНЫЕ СМИ</div><div class={0}bya{0}></div></div><div style={0}border-top:1px solid black; border-bottom:2px solid lightblue; {0} id={0}row{0}><div class={0}bya{0}>Направленность материала</div><div class={0}bya{0}><div class={0}trya{0}>телевиденье</div><div class={0}trya{0}>радио</div><div class={0}trya{0}>печать</div></div><div class={0}bya{0}><div class={0}trya{0}>телевиденье</div><div class={0}trya{0}>радио</div><div class={0}trya{0}>печать</div></div><div class={0}bya{0}><div class={0}trya{0}style={0}width: 49% {0}>интернет</div><div class={0}trya{0} >итого</div></div></div>", '"');
+                    SQLiteCommand comm = new SQLiteCommand("SELECT id,value FROM " + table + " "+checks+";", conn);
                     SQLiteDataReader dr = comm.ExecuteReader();
                     dataSet ds = new dataSet();
-                    ds.newRow("");
-                    SQLiteCommand comm2 = new SQLiteCommand("SELECT smi.place, smi.type from smi inner join card_in_smi, cards  ON card_in_smi.cards_num = cards.id AND smi.id = card_in_smi.smi AND cards." + table + " like ''  and date(card_in_smi.date) >= date('" + from.ToString("yyyy-MM-dd") + "') and date(card_in_smi.date) <= date('" + to.ToString("yyyy-MM-dd") + "');", conn);
-                    SQLiteDataReader dr2 = comm2.ExecuteReader();
-                    foreach (DbDataRecord ddr in dr2)
+                    if (thisType != ReportType.concreteness)
                     {
-                        ds.set(ddr);
+                        ds.newRow("");
+                        SQLiteCommand comm2 = new SQLiteCommand("SELECT smi.place, smi.type from smi inner join card_in_smi, cards  ON card_in_smi.cards_num = cards.id AND smi.id = card_in_smi.smi AND cards." + table + " like ''  and date(card_in_smi.date) >= date('" + from.ToString("yyyy-MM-dd") + "') and date(card_in_smi.date) <= date('" + to.ToString("yyyy-MM-dd") + "');", conn);
+                        SQLiteDataReader dr2 = comm2.ExecuteReader();
+                        foreach (DbDataRecord ddr in dr2)
+                        {
+                            ds.set(ddr);
+                        }
                     }
                     foreach (DbDataRecord ddr in dr)
                     {
                         ds.newRow(ddr["value"].ToString());
-                        comm2 = new SQLiteCommand("SELECT smi.place, smi.type, card_in_smi.times from smi inner join card_in_smi, cards  ON card_in_smi.cards_num = cards.id AND smi.id = card_in_smi.smi AND cards." + table + " like '%" + ddr["id"] + "%' and date(card_in_smi.date) >= date('" + from.ToString("yyyy-MM-dd") + "') and date(card_in_smi.date) <= date('" + to.ToString("yyyy-MM-dd") + "');", conn);
-                        dr2 = comm2.ExecuteReader();
+                        SQLiteCommand comm2 = new SQLiteCommand("SELECT smi.place, smi.type, card_in_smi.times from smi inner join card_in_smi, cards  ON card_in_smi.cards_num = cards.id AND smi.id = card_in_smi.smi AND cards." + table + " like '%" + ddr["id"] + "%' and date(card_in_smi.date) >= date('" + from.ToString("yyyy-MM-dd") + "') and date(card_in_smi.date) <= date('" + to.ToString("yyyy-MM-dd") + "');", conn);
+                        SQLiteDataReader dr2 = comm2.ExecuteReader();
                         foreach (DbDataRecord ddr2 in dr2)
                         {
                             ds.set(ddr2);
@@ -135,7 +142,7 @@ namespace FOND.Forms
                 {
                     MessageBox.Show("Ошибка во время создания отчета!\n" + ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                HTMLPage += "<br />Тестовый пример";
+                HTMLPage += "<br />Тестовый пример</html>";
                 reportViewer1.setHtml(HTMLPage);
             }
                 conn.Close();

@@ -23,7 +23,7 @@ namespace FOND.UserControls
 
         private void miBut1_Click(object sender, EventArgs e)
         {
-            webBrowser1.ShowPrintDialog();
+            webBrowser1.ShowPrintPreviewDialog();
         }
     }
 }

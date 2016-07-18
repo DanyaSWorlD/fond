@@ -167,7 +167,6 @@
     <Compile Include="ExtraForms\datePicker.Designer.cs">
       <DependentUpon>datePicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExtraForms\Eform.cs" />
     <Compile Include="ExtraForms\wayndatePicker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -297,6 +296,9 @@
     </Compile>
     <EmbeddedResource Include="ExtraForms\datePicker.resx">
       <DependentUpon>datePicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtraForms\wayndatePicker.resx">
+      <DependentUpon>wayndatePicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\bd_master.resx">
       <DependentUpon>bd_master.cs</DependentUpon>

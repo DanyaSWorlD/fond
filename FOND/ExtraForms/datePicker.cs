@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace FOND.ExtraForms
 {
-    public partial class datePicker : Form,Eform
+    public partial class datePicker : Form
     {
         private DialogResult d = DialogResult.Abort;
         public datePicker()
