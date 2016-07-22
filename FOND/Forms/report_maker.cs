@@ -66,7 +66,7 @@ namespace FOND.Forms
                         fullCount += count;
                     }
                     HTMLpage += string.Format("<div class={0}row{0}><div class={0}cell{0}>Итого</div><div class={0}cell{0}>" + fullCount + "</div></div>", '"');
-                    HTMLpage += "<br />Тестовый пример";
+                    HTMLpage += Extra.parser.parce(Properties.Settings.Default.footer_text, RichTextBoxStreamType.RichText);
                     HTMLpage += "</body><style>body{width:600px;} .row{width:600px;} .cell{width:49%;float:left;min-height:20px;text-align:center;border:1px solid black;}</style>";
                 }
                 catch (Exception ex)
@@ -142,7 +142,7 @@ namespace FOND.Forms
                 {
                     MessageBox.Show("Ошибка во время создания отчета!\n" + ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                HTMLPage += "<br />Тестовый пример</html>";
+                HTMLPage += Extra.parser.parce(Properties.Settings.Default.footer_text,RichTextBoxStreamType.RichText);
                 reportViewer1.setHtml(HTMLPage);
             }
                 conn.Close();
@@ -267,7 +267,7 @@ namespace FOND.Forms
             public int[] count = new int[8];
             public row(string _name)
             {
-                name = _name;
+                name = Common.HTMLcommon.shield(_name);
             }
             public void plus(column c)
             {

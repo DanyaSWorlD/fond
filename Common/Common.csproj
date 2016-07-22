@@ -74,6 +74,7 @@
     <Compile Include="lastlog.cs" />
     <Compile Include="master.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqliteCommon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

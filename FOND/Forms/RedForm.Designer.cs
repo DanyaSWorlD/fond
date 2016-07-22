@@ -88,13 +88,15 @@ namespace FOND
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.smiStats1 = new FOND.UserControls.smiStats();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.smiStats2 = new FOND.UserControls.smiStats();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.smiStats3 = new FOND.UserControls.smiStats();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -612,6 +614,7 @@ namespace FOND
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(23, 354);
+            this.tabControl1.MinimumSize = new System.Drawing.Size(0, 200);
             this.tabControl1.Name = "tabControl1";
             this.tableLayoutPanel1.SetRowSpan(this.tabControl1, 3);
             this.tabControl1.SelectedIndex = 0;
@@ -651,9 +654,9 @@ namespace FOND
             this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 201F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tableLayoutPanel2.Controls.Add(this.dataGridView1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel5, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.smiStats1, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -688,6 +691,7 @@ namespace FOND
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.MinimumSize = new System.Drawing.Size(400, 0);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -701,23 +705,17 @@ namespace FOND
             this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(977, 225);
+            this.dataGridView1.Size = new System.Drawing.Size(878, 225);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // tableLayoutPanel5
+            // smiStats1
             // 
-            this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(986, 3);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 2;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(195, 225);
-            this.tableLayoutPanel5.TabIndex = 1;
+            this.smiStats1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.smiStats1.Location = new System.Drawing.Point(887, 3);
+            this.smiStats1.Name = "smiStats1";
+            this.smiStats1.Size = new System.Drawing.Size(294, 225);
+            this.smiStats1.TabIndex = 1;
             // 
             // tabPage2
             // 
@@ -735,7 +733,8 @@ namespace FOND
             // 
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel3.Controls.Add(this.smiStats2, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.dataGridView2, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
@@ -744,6 +743,14 @@ namespace FOND
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(1184, 231);
             this.tableLayoutPanel3.TabIndex = 1;
+            // 
+            // smiStats2
+            // 
+            this.smiStats2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.smiStats2.Location = new System.Drawing.Point(887, 3);
+            this.smiStats2.Name = "smiStats2";
+            this.smiStats2.Size = new System.Drawing.Size(294, 225);
+            this.smiStats2.TabIndex = 2;
             // 
             // dataGridView2
             // 
@@ -784,7 +791,7 @@ namespace FOND
             this.dataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView2.RowTemplate.Height = 24;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(978, 225);
+            this.dataGridView2.Size = new System.Drawing.Size(878, 225);
             this.dataGridView2.TabIndex = 0;
             // 
             // tabPage3
@@ -803,6 +810,7 @@ namespace FOND
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel4.Controls.Add(this.dataGridView3, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.smiStats3, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -852,6 +860,14 @@ namespace FOND
             this.dataGridView3.Size = new System.Drawing.Size(984, 231);
             this.dataGridView3.TabIndex = 0;
             this.dataGridView3.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellContentClick);
+            // 
+            // smiStats3
+            // 
+            this.smiStats3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.smiStats3.Location = new System.Drawing.Point(993, 3);
+            this.smiStats3.Name = "smiStats3";
+            this.smiStats3.Size = new System.Drawing.Size(194, 231);
+            this.smiStats3.TabIndex = 1;
             // 
             // button1
             // 
@@ -1204,7 +1220,6 @@ namespace FOND
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem CM2add;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Button bFirst;
         private System.Windows.Forms.Button bPrevius;
@@ -1216,5 +1231,8 @@ namespace FOND
         private Settings_Pages.MainSettings mainSettings6;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private UserControls.miBut miBut1;
+        private UserControls.smiStats smiStats1;
+        private UserControls.smiStats smiStats2;
+        private UserControls.smiStats smiStats3;
     }
 }

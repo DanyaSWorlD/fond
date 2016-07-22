@@ -11,6 +11,7 @@ namespace FOND
 {
     public partial class MainForm : Form
     {
+        Extra.backup b = new Extra.backup();
         lastlog lg = new lastlog();
         public MainForm()
         {
@@ -66,10 +67,10 @@ namespace FOND
             this.Show();
         }
 
-        //проверка бд, ее структуры и значенй перед запуском приложения
+        //проверка бд, ее структуры и значенй перед запуском приложения, а также проверка всех прочих важных параметров
         private void datacheck()
         {
-            if (FOND.Properties.Settings.Default.db_file_dir == "" || !File.Exists(Properties.Settings.Default.db_file_dir))
+            if (Properties.Settings.Default.db_file_dir == "" || !File.Exists(Properties.Settings.Default.db_file_dir))
             {
                 bd_master Bd_master = new bd_master();
                 Bd_master.Owner = this;
@@ -109,6 +110,16 @@ namespace FOND
                     Bd_master.Owner = this;
                     Bd_master.ShowDialog();
                     Bd_master.Dispose();
+                }
+            }
+            if(Properties.Settings.Default.footer_text == "")
+            {
+                var dr = MessageBox.Show("Не заполнен закрывающий текст отчетов. Окрыть форму создания текста?", "Внимание!", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                if(dr == DialogResult.Yes)
+                {
+                    ExtraForms.TextEdit te = new ExtraForms.TextEdit();
+                    te.ShowDialog();
+                    te.Dispose();
                 }
             }
         }

@@ -141,16 +141,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtraForms\datePicker.cs">
+    <Compile Include="Extra\backup.cs" />
+    <Compile Include="Extra\datePicker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExtraForms\datePicker.Designer.cs">
+    <Compile Include="Extra\datePicker.Designer.cs">
       <DependentUpon>datePicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExtraForms\wayndatePicker.cs">
+    <Compile Include="Extra\parser.cs" />
+    <Compile Include="Extra\TextEdit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExtraForms\wayndatePicker.Designer.cs">
+    <Compile Include="Extra\TextEdit.Designer.cs">
+      <DependentUpon>TextEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extra\wayndatePicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra\wayndatePicker.Designer.cs">
       <DependentUpon>wayndatePicker.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\bd_master.cs">
@@ -236,6 +244,12 @@
     <Compile Include="Settings Pages\console.Designer.cs">
       <DependentUpon>console.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings Pages\moreSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings Pages\moreSettings.Designer.cs">
+      <DependentUpon>moreSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\DateTime.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -266,16 +280,25 @@
     <Compile Include="UserControls\ReportViewer.Designer.cs">
       <DependentUpon>ReportViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\smiStats.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\smiStats.Designer.cs">
+      <DependentUpon>smiStats.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\UserControl3.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\UserControl3.Designer.cs">
       <DependentUpon>UserControl3.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ExtraForms\datePicker.resx">
+    <EmbeddedResource Include="Extra\datePicker.resx">
       <DependentUpon>datePicker.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExtraForms\wayndatePicker.resx">
+    <EmbeddedResource Include="Extra\TextEdit.resx">
+      <DependentUpon>TextEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra\wayndatePicker.resx">
       <DependentUpon>wayndatePicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\bd_master.resx">
@@ -330,6 +353,9 @@
     <EmbeddedResource Include="Settings Pages\console.resx">
       <DependentUpon>console.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Settings Pages\moreSettings.resx">
+      <DependentUpon>moreSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\DateTime.resx">
       <DependentUpon>DateTime.cs</DependentUpon>
     </EmbeddedResource>
@@ -338,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ReportViewer.resx">
       <DependentUpon>ReportViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\smiStats.resx">
+      <DependentUpon>smiStats.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UserControl3.resx">
       <DependentUpon>UserControl3.cs</DependentUpon>

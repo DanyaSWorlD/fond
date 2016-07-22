@@ -10,7 +10,7 @@ namespace FOND.masterPages
     public partial class page1 : MasterPage
     {
         private lastlog lg;
-        public Common.master mstr = new master();
+        public master mstr = new master();
         public page1()
         {
             InitializeComponent();

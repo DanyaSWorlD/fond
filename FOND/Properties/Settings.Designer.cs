@@ -57,5 +57,29 @@ namespace FOND.Properties {
                 this["pg_version"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string footer_text {
+            get {
+                return ((string)(this["footer_text"]));
+            }
+            set {
+                this["footer_text"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string backup_file_dir {
+            get {
+                return ((string)(this["backup_file_dir"]));
+            }
+            set {
+                this["backup_file_dir"] = value;
+            }
+        }
     }
 }
