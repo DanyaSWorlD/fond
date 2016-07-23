@@ -79,37 +79,18 @@ namespace FOND
             }
             else
             {
-                var tnames = new string[] { "workers", "materialway", "material_theme", "material_presentation", "quality", "type", "speakerlvl", "regions", "parts", "smi", "card_in_smi" };
-                var connstr = "`name` = '" + tnames[0] + "'";
-                SQLiteConnection conn = new SQLiteConnection(string.Format("Data Source = {0};", Properties.Settings.Default.db_file_dir));
-                for (int i = 1; i < tnames.Length; i++)
+                try
                 {
-                    connstr += " OR `name` = '" + tnames[i] + "'";
-                }
-                SQLiteCommand comm = new SQLiteCommand("SELECT `name` FROM `sqlite_master` WHERE " + connstr, conn);
-                conn.Open();
-                try { comm.ExecuteNonQuery(); } catch (SQLiteException e) { MessageBox.Show(e.Message, "lol"); }
-                SQLiteDataReader dr = comm.ExecuteReader();
-                var p = 0;
-                foreach (DbDataRecord record in dr)
-                {
-                    var name = record["name"] + "";
-                    for (int i = 0; i < tnames.Length; i++)
+                    if (!dbCheck(Properties.Settings.Default.db_file_dir))
                     {
-                        if (name == tnames[i])
-                        {
-                            p++;
-                        }
+                        bd_master Bd_master = new bd_master();
+                        Bd_master.Owner = this;
+                        Bd_master.ShowDialog();
+                        Bd_master.Dispose();
                     }
-                }
-                conn.Close();
-                conn.Dispose();
-                if (p != tnames.Length)
+                }catch(Exception e)
                 {
-                    bd_master Bd_master = new bd_master();
-                    Bd_master.Owner = this;
-                    Bd_master.ShowDialog();
-                    Bd_master.Dispose();
+                    MessageBox.Show(e.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             if(Properties.Settings.Default.footer_text == "")
@@ -123,7 +104,39 @@ namespace FOND
                 }
             }
         }
-
+        public static bool dbCheck(string dbFile)
+        {
+            var tnames = new string[] { "workers", "materialway", "material_theme", "material_presentation", "quality", "type", "speakerlvl", "regions", "parts", "smi", "card_in_smi","cards" };
+            var connstr = "`name` = '" + tnames[0] + "'";
+            SQLiteConnection conn = new SQLiteConnection(string.Format("Data Source = {0};", Properties.Settings.Default.db_file_dir));
+            for (int i = 1; i < tnames.Length; i++)
+            {
+                connstr += " OR `name` = '" + tnames[i] + "'";
+            }
+            SQLiteCommand comm = new SQLiteCommand("SELECT `name` FROM `sqlite_master` WHERE " + connstr, conn);
+            conn.Open();
+            comm.ExecuteNonQuery();
+            SQLiteDataReader dr = comm.ExecuteReader();
+            var p = 0;
+            foreach (DbDataRecord record in dr)
+            {
+                var name = record["name"] + "";
+                for (int i = 0; i < tnames.Length; i++)
+                {
+                    if (name == tnames[i])
+                    {
+                        p++;
+                    }
+                }
+            }
+            conn.Close();
+            conn.Dispose();
+            if (p != tnames.Length)
+            {
+                return false;
+            }
+            else return true;
+        }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 

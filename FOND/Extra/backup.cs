@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
 using System.Threading;
@@ -55,11 +55,14 @@ namespace FOND.Extra
                             noIco.BalloonTipText = "Начато";
                             noIco.ShowBalloonTip(3000);
                             Thread.Sleep(10000);
-                            File.Delete(bd_backup_file);
-                            File.Copy(bd_file, bd_backup_file);
-                            f = new FileInfo(bd_backup_file);
-                            noIco.BalloonTipText = "Резервное копирование завершно\nРазмер файла: " + f.Length / 1024 + "кб";
-                            noIco.ShowBalloonTip(3000);
+                            if (MainForm.dbCheck(bd_file))
+                            {
+                                File.Delete(bd_backup_file);
+                                File.Copy(bd_file, bd_backup_file);
+                                f = new FileInfo(bd_backup_file);
+                                noIco.BalloonTipText = "Резервное копирование завершно\nРазмер файла: " + f.Length / 1024 + "кб";
+                                noIco.ShowBalloonTip(3000);
+                            }
                         }
                         catch(Exception e) {
                             lg.add("backup: " + e.Message);
@@ -94,6 +97,12 @@ namespace FOND.Extra
                         noIco.ShowBalloonTip(3000);
                     }
                 }
+            }
+            else
+            {
+                noIco.BalloonTipText = "Резервное копирование будет активировано после заполнения базы данных";
+                noIco.ShowBalloonTip(3000);
+                bd_master_lissener.getInstance().bd_formClosed += new bd_master_lissener.bd_formClosedEventHandler(Backup);
             }
         }
     }

@@ -36,10 +36,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.checkBoxComboBox1 = new PresentationControls.CheckBoxComboBox();
-            this.ok_button = new System.Windows.Forms.Button();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.cancel_button = new System.Windows.Forms.Button();
             this.line1 = new FOND.UserControls.Line();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.ok_button = new System.Windows.Forms.Button();
+            this.cancel_button = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -127,18 +127,18 @@
             this.checkBoxComboBox1.Size = new System.Drawing.Size(206, 24);
             this.checkBoxComboBox1.TabIndex = 5;
             // 
-            // ok_button
+            // line1
             // 
-            this.ok_button.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ok_button.FlatAppearance.BorderSize = 0;
-            this.ok_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ok_button.Location = new System.Drawing.Point(3, 3);
-            this.ok_button.Name = "ok_button";
-            this.ok_button.Size = new System.Drawing.Size(94, 24);
-            this.ok_button.TabIndex = 7;
-            this.ok_button.Text = "ок";
-            this.ok_button.UseVisualStyleBackColor = true;
-            this.ok_button.Click += new System.EventHandler(this.ok_button_Click);
+            this.line1.AutoSize = true;
+            this.line1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tableLayoutPanel1.SetColumnSpan(this.line1, 2);
+            this.line1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.line1.Location = new System.Drawing.Point(3, 93);
+            this.line1.MaximumSize = new System.Drawing.Size(2147483647, 2);
+            this.line1.MinimumSize = new System.Drawing.Size(1, 2);
+            this.line1.Name = "line1";
+            this.line1.Size = new System.Drawing.Size(276, 2);
+            this.line1.TabIndex = 6;
             // 
             // tableLayoutPanel2
             // 
@@ -154,6 +154,19 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(200, 30);
             this.tableLayoutPanel2.TabIndex = 8;
             // 
+            // ok_button
+            // 
+            this.ok_button.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ok_button.FlatAppearance.BorderSize = 0;
+            this.ok_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ok_button.Location = new System.Drawing.Point(3, 3);
+            this.ok_button.Name = "ok_button";
+            this.ok_button.Size = new System.Drawing.Size(94, 24);
+            this.ok_button.TabIndex = 7;
+            this.ok_button.Text = "ок";
+            this.ok_button.UseVisualStyleBackColor = true;
+            this.ok_button.Click += new System.EventHandler(this.ok_button_Click);
+            // 
             // cancel_button
             // 
             this.cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -166,19 +179,6 @@
             this.cancel_button.TabIndex = 8;
             this.cancel_button.Text = "отмена";
             this.cancel_button.UseVisualStyleBackColor = true;
-            // 
-            // line1
-            // 
-            this.line1.AutoSize = true;
-            this.line1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tableLayoutPanel1.SetColumnSpan(this.line1, 2);
-            this.line1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.line1.Location = new System.Drawing.Point(3, 93);
-            this.line1.MaximumSize = new System.Drawing.Size(2147483647, 2);
-            this.line1.MinimumSize = new System.Drawing.Size(1, 2);
-            this.line1.Name = "line1";
-            this.line1.Size = new System.Drawing.Size(276, 2);
-            this.line1.TabIndex = 6;
             // 
             // wayndatePicker
             // 
