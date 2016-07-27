@@ -29,8 +29,8 @@
     <UpdateUrl>http://daquga.com/fond/updates/</UpdateUrl>
     <ProductName>FOND</ProductName>
     <PublisherName>DAQUGA studios</PublisherName>
-    <ApplicationRevision>15</ApplicationRevision>
-    <ApplicationVersion>0.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
