@@ -29,8 +29,8 @@
     <UpdateUrl>http://daquga.com/fond/updates/</UpdateUrl>
     <ProductName>FOND</ProductName>
     <PublisherName>DAQUGA studios</PublisherName>
-    <ApplicationRevision>15</ApplicationRevision>
-    <ApplicationVersion>0.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -44,10 +44,10 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -103,14 +103,6 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="mysql.data, Version=5.2.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\mysql-connector-net-5.2.7-noinstall\mysql.data.dll</HintPath>
-    </Reference>
-    <Reference Include="mysql.web, Version=5.2.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\mysql-connector-net-5.2.7-noinstall\mysql.web.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
     </Reference>
@@ -141,16 +133,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtraForms\datePicker.cs">
+    <Compile Include="Extra\backup.cs" />
+    <Compile Include="Extra\connector.cs" />
+    <Compile Include="Extra\datePicker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExtraForms\datePicker.Designer.cs">
+    <Compile Include="Extra\datePicker.Designer.cs">
       <DependentUpon>datePicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExtraForms\wayndatePicker.cs">
+    <Compile Include="Extra\import.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExtraForms\wayndatePicker.Designer.cs">
+    <Compile Include="Extra\import.Designer.cs">
+      <DependentUpon>import.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extra\importPages\finish.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Extra\importPages\finish.Designer.cs">
+      <DependentUpon>finish.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extra\importPages\import_insert.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Extra\importPages\import_insert.Designer.cs">
+      <DependentUpon>import_insert.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extra\importPages\import_mp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Extra\importPages\import_mp.Designer.cs">
+      <DependentUpon>import_mp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extra\parser.cs" />
+    <Compile Include="Extra\TextEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra\TextEdit.Designer.cs">
+      <DependentUpon>TextEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extra\wayndatePicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra\wayndatePicker.Designer.cs">
       <DependentUpon>wayndatePicker.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\bd_master.cs">
@@ -236,6 +261,12 @@
     <Compile Include="Settings Pages\console.Designer.cs">
       <DependentUpon>console.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings Pages\moreSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings Pages\moreSettings.Designer.cs">
+      <DependentUpon>moreSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\DateTime.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -266,16 +297,37 @@
     <Compile Include="UserControls\ReportViewer.Designer.cs">
       <DependentUpon>ReportViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\smiStats.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\smiStats.Designer.cs">
+      <DependentUpon>smiStats.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\UserControl3.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\UserControl3.Designer.cs">
       <DependentUpon>UserControl3.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ExtraForms\datePicker.resx">
+    <EmbeddedResource Include="Extra\datePicker.resx">
       <DependentUpon>datePicker.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExtraForms\wayndatePicker.resx">
+    <EmbeddedResource Include="Extra\import.resx">
+      <DependentUpon>import.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra\importPages\finish.resx">
+      <DependentUpon>finish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra\importPages\import_insert.resx">
+      <DependentUpon>import_insert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra\importPages\import_mp.resx">
+      <DependentUpon>import_mp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra\TextEdit.resx">
+      <DependentUpon>TextEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra\wayndatePicker.resx">
       <DependentUpon>wayndatePicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\bd_master.resx">
@@ -330,6 +382,9 @@
     <EmbeddedResource Include="Settings Pages\console.resx">
       <DependentUpon>console.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Settings Pages\moreSettings.resx">
+      <DependentUpon>moreSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\DateTime.resx">
       <DependentUpon>DateTime.cs</DependentUpon>
     </EmbeddedResource>
@@ -338,6 +393,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ReportViewer.resx">
       <DependentUpon>ReportViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\smiStats.resx">
+      <DependentUpon>smiStats.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UserControl3.resx">
       <DependentUpon>UserControl3.cs</DependentUpon>
@@ -479,6 +537,7 @@
     <Content Include="Resources\40812526.png" />
     <None Include="Resources\mmlwffkl.bmp" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net45\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

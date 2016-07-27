@@ -109,7 +109,7 @@ namespace FOND.masterPages
                     }
                     else
                     {
-                        comm = new SQLiteCommand("INSERT INTO " + tnames[этап] + "  ( value ) VALUES ('" + st + "')", bd_master.conn);
+                        comm = new SQLiteCommand("INSERT INTO " + tnames[этап] + "  ( value ) VALUES ('" + SqliteCommon.realEscapeString(st) + "')", bd_master.conn);
                         comm.ExecuteNonQuery();
                     }
             }

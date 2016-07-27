@@ -24,7 +24,7 @@ namespace FOND
         public int outarri = 0;
         public int outarri2 = 0;
         public lastlog lg = new lastlog();
-        private long id = 0;
+        private long id = -1;
         private string cnames, invals;
         private int ended = 0;
         private string savemode;
@@ -35,6 +35,7 @@ namespace FOND
         public RedForm(bool isnew)
         {
             InitializeComponent();
+            smiStats3.setDisplayMode(UserControls.smiStats.smiStatsDisplayngModel.onlyResult);
             dataGridView1.CellMouseEnter += new DataGridViewCellEventHandler(dataGridView1_CellMouseEnter);
             dataGridView2.CellMouseEnter += new DataGridViewCellEventHandler(dataGridView1_CellMouseEnter);
             dataGridView3.CellMouseEnter += new DataGridViewCellEventHandler(dataGridView1_CellMouseEnter);
@@ -53,7 +54,7 @@ namespace FOND
         private void getLastId()
         {
             //lg.add("Tread debug: getLastId func started");
-            if (id == 0)
+            if (id == -1)
             {
                 SQLiteCommand comm = new SQLiteCommand("SELECT MAX(id) FROM cards", conn);
                 SQLiteDataReader dr = comm.ExecuteReader();
@@ -105,7 +106,7 @@ namespace FOND
         }
         private void errshow()
         {
-            var rez = MessageBox.Show("Внимание!!!", "Таблица 'Карточки' не найдена, при этом другие таблицы присутствуют. Вы уверены что вы открыли ту базу данных? Проверьте базу данных через мастер настройки, и если проблема не решится обратитесь в службу поддержки", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+            var rez = MessageBox.Show("Внимание!!!", "Таблица \"Карточки\" не найдена, при этом другие таблицы присутствуют. Вы уверены что вы открыли ту базу данных? Проверьте базу данных через мастер настройки, и если проблема не решится обратитесь в службу поддержки", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
             switch (rez)
             {
                 case DialogResult.Retry:
@@ -275,7 +276,7 @@ namespace FOND
         private void loaddata()
         {
             lg.add("Thread debug: load data function started");
-            if (id != 0)
+            if (id != -1)
             {
                 SQLiteCommand comm = new SQLiteCommand("SELECT * FROM cards WHERE id = " + id, conn);
                 SQLiteDataReader dr = comm.ExecuteReader();
@@ -365,7 +366,8 @@ namespace FOND
                         lg.add("Regform: not same card in base. Cant show to user, but can print it here.");
                         MultyThreadstoploadind();
                     }
-                    else {
+                    else
+                    {
                         if (id > minId && id < maxId)
                         {
                             id = id + goWay;
@@ -387,8 +389,9 @@ namespace FOND
                 st st = new st(SetText);
                 this.Invoke(st, new object[] { tb, txt });
             }
-            else {
-                    tb.Text = txt;
+            else
+            {
+                tb.Text = txt;
             }
 
         }
@@ -415,7 +418,8 @@ namespace FOND
                 sc sc = new sc(SetChecked);
                 this.Invoke(sc, new object[] { cbcb, index });
             }
-            else {
+            else
+            {
                 cbcb.CheckBoxItems[index + 1].Checked = true;
             }
         }
@@ -486,7 +490,7 @@ namespace FOND
         private void button2_Click(object sender, EventArgs e)
         {
             savemode = "";
-            if (id == 0)
+            if (id == -1)
             {
                 savemode = "save";
                 cardsave();
@@ -502,7 +506,7 @@ namespace FOND
         {
             end = 1;
             savemode = "";
-            if (id == 0)
+            if (id == -1)
             {
                 savemode = "save";
                 cardsave();
@@ -618,14 +622,15 @@ namespace FOND
         {
             if (res != "" && res != null)
             {
-                outarr[0, outarri] = req;
-                outarr[1, outarri] = res;
+                outarr[0, outarri] = SqliteCommon.realEscapeString(req);
+                outarr[1, outarri] = SqliteCommon.realEscapeString(res);
                 lg.add("err debug: " + outarr[1, outarri]);
                 outarri++;
-            }else
+            }
+            else
 
 
-            lg.add("err debug: this object selected items is null");
+                lg.add("err debug: this object selected items is null");
 
 
         }
@@ -634,8 +639,8 @@ namespace FOND
         {
             if (cmb.Text != "" && request != "" && cmb.Text != null)
             {
-                outarr2[0, outarri2] = request;
-                outarr2[1, outarri2] = cmb.Text;
+                outarr2[0, outarri2] = SqliteCommon.realEscapeString(request);
+                outarr2[1, outarri2] = SqliteCommon.realEscapeString(cmb.Text);
                 lg.add("err debug: " + request + "  value: " + cmb.Text);
                 outarri2++;
             }
@@ -695,53 +700,60 @@ namespace FOND
                 {
                     lock (locker)
                     {
-                        if (savemode == "save")
+                        try
                         {
-                            string cnn = "INSERT INTO cards (" + cnames + ") VALUES ( " + invals + " );";
-                            SQLiteCommand comm = new SQLiteCommand(cnn, conn);
-                            comm.ExecuteNonQuery();
-                            comm = new SQLiteCommand("SELECT MAX(id) FROM cards", conn);
-                            SQLiteDataReader dr = comm.ExecuteReader();
-                            foreach (DbDataRecord dbdr in dr)
+                            if (savemode == "save")
                             {
-                                id = (int)(long)dbdr[0];
-                            }
-                            MultyThreadChangeId(id);
-                            MultyThreadstoploadind();
-                        }
-                        else
-                        {
-                            if (savemode == "update")
-                            {
-                                string zaprstr = "";
-                                for (var i = 0; i < outarri; i++)
-                                {
-                                    if (zaprstr == "")
-                                    {
-                                        zaprstr = outarr[0, i] + " = " + "'" + outarr[1, i] + "'";
-                                    }
-                                    else
-                                    {
-                                        zaprstr += "," + outarr[0, i] + " = " + "'" + outarr[1, i] + "'";
-                                    }
-                                }
-                                for (var i = 0; i < outarri2; i++)
-                                {
-                                    if (zaprstr == "")
-                                    {
-                                        zaprstr = outarr2[0, i] + " = " + "'" + outarr2[1, i] + "'";
-                                    }
-                                    else
-                                    {
-                                        zaprstr += "," + outarr2[0, i] + " = " + "'" + outarr2[1, i] + "'";
-                                    }
-                                }
-                                zaprstr = "UPDATE cards SET " + zaprstr + "WHERE id =" + id;
-                                SQLiteCommand comm = new SQLiteCommand(zaprstr, conn);
+                                string cnn = "INSERT INTO cards (" + cnames + ") VALUES ( " + invals + " );";
+                                SQLiteCommand comm = new SQLiteCommand(cnn, conn);
                                 comm.ExecuteNonQuery();
+                                comm = new SQLiteCommand("SELECT MAX(id) FROM cards", conn);
+                                SQLiteDataReader dr = comm.ExecuteReader();
+                                foreach (DbDataRecord dbdr in dr)
+                                {
+                                    id = (int)(long)dbdr[0];
+                                }
                                 MultyThreadChangeId(id);
                                 MultyThreadstoploadind();
                             }
+                            else
+                            {
+                                if (savemode == "update")
+                                {
+                                    string zaprstr = "";
+                                    for (var i = 0; i < outarri; i++)
+                                    {
+                                        if (zaprstr == "")
+                                        {
+                                            zaprstr = outarr[0, i] + " = " + "'" + outarr[1, i] + "'";
+                                        }
+                                        else
+                                        {
+                                            zaprstr += "," + outarr[0, i] + " = " + "'" + outarr[1, i] + "'";
+                                        }
+                                    }
+                                    for (var i = 0; i < outarri2; i++)
+                                    {
+                                        if (zaprstr == "")
+                                        {
+                                            zaprstr = outarr2[0, i] + " = " + "'" + outarr2[1, i] + "'";
+                                        }
+                                        else
+                                        {
+                                            zaprstr += "," + outarr2[0, i] + " = " + "'" + outarr2[1, i] + "'";
+                                        }
+                                    }
+                                    zaprstr = "UPDATE cards SET " + zaprstr + "WHERE id =" + id;
+                                    SQLiteCommand comm = new SQLiteCommand(zaprstr, conn);
+                                    comm.ExecuteNonQuery();
+                                    MultyThreadChangeId(id);
+                                    MultyThreadstoploadind();
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(e.Message, "error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         if (end == 1)
                             MultyThreadClose();
@@ -816,7 +828,7 @@ namespace FOND
         /// <param name="ind">Индекс операции</param>
         private void MultyThreadChangeds(DataGridView at, DataGridViewColumn dgvc, int ind)
         {
-            lg.add("Thread debug: MultyTreadChangeds started."+Environment.NewLine+" Params: ind = " + ind.ToString() + " column name = " + isnull(dgvc) + " datagridview name = " + at.Name + Environment.NewLine);
+            lg.add("Thread debug: MultyTreadChangeds started." + Environment.NewLine + " Params: ind = " + ind.ToString() + " column name = " + isnull(dgvc) + " datagridview name = " + at.Name + Environment.NewLine);
             if (at.InvokeRequired)
             {
                 lg.add("Tread debug: Invoke requared. Invoking" + Environment.NewLine + " Params: ind = " + ind.ToString() + " column name = " + isnull(dgvc) + " datagridview name = " + at.Name + Environment.NewLine);
@@ -831,7 +843,7 @@ namespace FOND
                     if (at.ColumnCount != 0)
                     {
                         at.Columns.Clear();
-                        lg.add(Environment.NewLine+Environment.NewLine+"Thread debug: Columns cleared" + Environment.NewLine + " Params: ind = " + ind.ToString() + " column name = " + isnull(dgvc) + " datagridview name = " + at.Name + Environment.NewLine);
+                        lg.add(Environment.NewLine + Environment.NewLine + "Thread debug: Columns cleared" + Environment.NewLine + " Params: ind = " + ind.ToString() + " column name = " + isnull(dgvc) + " datagridview name = " + at.Name + Environment.NewLine);
                     }
                 }
                 if (ind == 0)
@@ -845,7 +857,7 @@ namespace FOND
                 if (ind == 1)
                 {
                     at.Columns.Add(dgvc);
-                    lg.add(Environment.NewLine+ Environment.NewLine+"Tread debug: column " + dgvc.Name + " added" + Environment.NewLine + " Params: ind = " + ind.ToString() + " column name = " + isnull(dgvc) + " datagridview name = " + at.Name + Environment.NewLine);
+                    lg.add(Environment.NewLine + Environment.NewLine + "Tread debug: column " + dgvc.Name + " added" + Environment.NewLine + " Params: ind = " + ind.ToString() + " column name = " + isnull(dgvc) + " datagridview name = " + at.Name + Environment.NewLine);
                 }
             }
         }
@@ -878,6 +890,9 @@ namespace FOND
             MultyThreadChangeds(dgv[0], null, 0);
             MultyThreadChangeds(dgv[1], null, 0);
             MultyThreadChangeds(dgv[2], null, 0);
+            mtupd(0);
+            mtupd(1);
+            mtupd(2);
             SQLiteCommand comm = new SQLiteCommand("SELECT * FROM card_in_smi WHERE cards_num = " + id, conn);
             SQLiteDataReader dr = comm.ExecuteReader();
             foreach (DbDataRecord ddr in dr)
@@ -886,7 +901,6 @@ namespace FOND
                 SQLiteDataReader dr2 = comm.ExecuteReader();
                 foreach (DbDataRecord ddr2 in dr2)
                 {
-
                     int where = -1;
                     switch (ddr2["place"].ToString())
                     {
@@ -901,13 +915,16 @@ namespace FOND
                             break;
                     }
                     if (where != -1)
-                        mtaddr(dgv[where], ddr2["type"].ToString(), ddr2["name"].ToString(), ddr["date"].ToString(), ddr["times"].ToString(), ddr["link"].ToString(),ddr["pu"].ToString() == "" ? "-" : "+", ddr["id"].ToString());
+                    {
+                        mtaddr(dgv[where], ddr2["type"].ToString(), ddr2["name"].ToString(), ddr["date"].ToString(), ddr["times"].ToString(), ddr["link"].ToString(), ddr["pu"].ToString() == "" ? "-" : "+", ddr["id"].ToString());
+                        mtstat(where, ddr ,ddr2);
+                    }
                 }
             }
             MultyThreadstoploadind();
         }
-        delegate void addr(DataGridView tg,params string[] args);
-        private void mtaddr(DataGridView tg,params string[] args)
+        delegate void addr(DataGridView tg, params string[] args);
+        private void mtaddr(DataGridView tg, params string[] args)
         {
             if (tg.InvokeRequired || tg.ColumnCount != 7)
             {
@@ -915,14 +932,60 @@ namespace FOND
                 this.Invoke(dr, new object[] { tg, args });
             }
             else
-            {          
+            {
                 int zaebalsya_uze = tg.Rows.Add();
                 //lg.add("Tread debug: adding row."+Environment.NewLine+" Sys info: row_lenght:"+tg.Rows[zaebalsya_uze].Cells.Count+"; p1 = "+p1+ " p2 = " + p2 + " p3 = " + p3 + " p4 = " + p4 + " p5 = " + p5 + " p6 " + p6 + ";");
-                for(int i = 0; i < 7; i++)
+                for (int i = 0; i < 7; i++)
                 {
                     tg.Rows[zaebalsya_uze].Cells[i].Value = args[i];
                 }
                 tg.Rows[zaebalsya_uze].ContextMenuStrip = contextMenuStrip2;
+            }
+        }
+        delegate void stat(int TabLayoutPanelIndex, DbDataRecord ddr, DbDataRecord ddr2);
+        private void mtstat(int TablayoutPanelIndex,DbDataRecord ddr, DbDataRecord ddr2)
+        {
+            UserControls.smiStats[] ss = new UserControls.smiStats[] { smiStats1, smiStats2, smiStats3 };
+            if(ss[TablayoutPanelIndex].InvokeRequired)
+            {
+                this.Invoke(new stat(mtstat),new object[] { TablayoutPanelIndex,ddr,ddr2 });
+            }
+            else
+            {
+                switch (ddr2["type"].ToString())
+                {
+                    case "internet":
+                        ss[TablayoutPanelIndex].addResultCount((int)(long)ddr["times"] == 0 ? 1 : (int)(long)ddr["times"]);
+                        break;
+                    case "tv":
+                        ss[TablayoutPanelIndex].addTvCount((int)(long)ddr["times"] == 0 ? 1 : (int)(long)ddr["times"]);
+                        ss[TablayoutPanelIndex].addResultCount((int)(long)ddr["times"] == 0 ? 1 : (int)(long)ddr["times"]);
+                        break;
+                    case "rad":
+                        ss[TablayoutPanelIndex].addRadCount((int)(long)ddr["times"] == 0 ? 1 : (int)(long)ddr["times"]);
+                        ss[TablayoutPanelIndex].addResultCount((int)(long)ddr["times"] == 0 ? 1 : (int)(long)ddr["times"]);
+                        break;
+                    case "gaz":
+                        ss[TablayoutPanelIndex].addPrtCount((int)(long)ddr["times"] == 0 ? 1 : (int)(long)ddr["times"]);
+                        ss[TablayoutPanelIndex].addResultCount((int)(long)ddr["times"] == 0 ? 1 : (int)(long)ddr["times"]);
+                        break;
+                }
+            }
+        }
+        delegate void upd(int ind);
+        private void mtupd(int ind)
+        {
+            UserControls.smiStats[] ss = new UserControls.smiStats[] { smiStats1, smiStats2, smiStats3 };
+            if (ss[ind].InvokeRequired)
+            {
+                this.Invoke(new upd(mtupd), new object[] { ind });
+            }
+            else
+            {
+                ss[ind].setPrtCount(0);
+                ss[ind].setRadCount(0);
+                ss[ind].setTvCount(0);
+                ss[ind].setResultCount(0);
             }
         }
         #endregion
@@ -947,12 +1010,12 @@ namespace FOND
         #region CONTEXT MENU STRIP
         private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            if (id == 0)
+            if (id == -1)
             {
                 savemode = "save";
                 cardsave();
             }
-            if (id != 0)
+            else
             {
                 if (e.ClickedItem == CM1add || e.ClickedItem == CM2add)
                 {
@@ -964,7 +1027,7 @@ namespace FOND
                 if (e.ClickedItem == CM2RED)
                 {
                     DataGridView[] dar = new DataGridView[] { dataGridView1, dataGridView2, dataGridView3 };
-                    var cisid = dar[tabControl1.SelectedIndex].Rows[rowIndex].Cells[dar[tabControl1.SelectedIndex].Rows[rowIndex].Cells.Count-1].Value.ToString();
+                    var cisid = dar[tabControl1.SelectedIndex].Rows[rowIndex].Cells[dar[tabControl1.SelectedIndex].Rows[rowIndex].Cells.Count - 1].Value.ToString();
                     Forms.smi_inp sminp = new Forms.smi_inp(id, cisid);
                     sminp.ShowDialog();
                     pictureBox1.Visible = true;
@@ -974,7 +1037,7 @@ namespace FOND
         }
         private void contextMenuStrip1_Opened(object sender, EventArgs e)
         {
-            if (id == 0)
+            if (id == -1)
                 CM1add.Text = "сохранить карточку";
             else
                 CM1add.Text = "добавить";
@@ -1027,14 +1090,17 @@ namespace FOND
                         changeid(id - 1, -1);
                     }
                     break;
-                case "bNext":if (id < maxId)
-            {
-                changeid(id + 1, 1);
-            }
+                case "bNext":
+                    if (id < maxId)
+                    {
+                        changeid(id + 1, 1);
+                    }
                     break;
-                case "bFirst":changeid(minId, 0);
+                case "bFirst":
+                    changeid(minId, 0);
                     break;
-                case "bLast":changeid(maxId, 0);
+                case "bLast":
+                    changeid(maxId, 0);
                     break;
             }
         }
@@ -1059,7 +1125,7 @@ namespace FOND
         private bool ttchanged = false;
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-                ttchanged = true;
+            ttchanged = true;
         }
 
         private void textBox3_KeyDown(object sender, KeyEventArgs e)
@@ -1141,7 +1207,7 @@ namespace FOND
         }
         public override bool Equals(object obj)
         {
-            if(obj.ToString() == value)
+            if (obj.ToString() == value)
             {
                 return true;
             }
@@ -1152,5 +1218,4 @@ namespace FOND
         }
     }
     #endregion
-
 }

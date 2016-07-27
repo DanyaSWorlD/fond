@@ -20,6 +20,7 @@ namespace FOND
         public bd_master()
         {
             InitializeComponent();
+            connector bl = connector.getInitializedWithBd_masterInstance(this);
             loadI();
             if (Settings.Default.db_file_dir != null && Settings.Default.db_file_dir != "") (pages[0] as page1).loaddbdir(Settings.Default.db_file_dir);
         }
@@ -118,6 +119,7 @@ namespace FOND
             {
                 e.Cancel = false;
             }
+            bd_masterClose?.Invoke();
         }
 
         private void bd_master_FormClosed(object sender, FormClosedEventArgs e)
@@ -132,5 +134,7 @@ namespace FOND
                 }
             }
         }
+        public delegate void bd_masterCloseHandler();
+        public event bd_masterCloseHandler bd_masterClose;
     }
 }

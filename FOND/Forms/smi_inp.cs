@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data.Common;
 using System.Linq;
-using System.Text;
+using Common;
 using System.Windows.Forms;
 using System.Data.SQLite;
 
@@ -108,11 +108,12 @@ namespace FOND.Forms
                 var itm = (comboBox3.SelectedItem as combovalue);
                 if (itm != null)
                 {
+                    itm.value = SqliteCommon.realEscapeString(itm.value);
                     conn.Open();
                     if (isupdate)
                     {
 
-                        SQLiteCommand comm = new SQLiteCommand("UPDATE `card_in_smi` SET `cards_num` = " + id + ",`smi` = " + itm.number + ",`date` = '" + dateTimePicker1.Value.ToString("yyyy-MM-dd") + "',`times` = '" + textBox1.Text + "',`link` = '" + textBox2.Text + "',`pu` = '" + (checkBox1.Checked == true ? "true" : "") + "' WHERE id = " + cisid + ";", conn);
+                        SQLiteCommand comm = new SQLiteCommand("UPDATE `card_in_smi` SET `cards_num` = " + id + ",`smi` = " + itm.number + ",`date` = '" + SqliteCommon.realEscapeString(dateTimePicker1.Value.ToString("yyyy-MM-dd")) + "',`times` = '" + SqliteCommon.realEscapeString(textBox1.Text) + "',`link` = '" + SqliteCommon.realEscapeString(textBox2.Text) + "',`pu` = '" + (checkBox1.Checked == true ? "true" : "") + "' WHERE id = " + cisid + ";", conn);
                         comm.ExecuteNonQuery();
                         conn.Close();
                         this.Close();
@@ -129,7 +130,7 @@ namespace FOND.Forms
                         }
                         if (col == 0)
                         {
-                            comm = new SQLiteCommand("INSERT INTO `card_in_smi`(`cards_num`,`smi`,`date`,`times`,`link`,`pu`) VALUES(" + id + ", " + itm.number + ", '" + dateTimePicker1.Value.ToString("yyyy-MM-dd") + "', '" + textBox1.Text + "','" + textBox2.Text + "','" + (checkBox1.Checked == true ? "true" : "") + "');", conn);
+                            comm = new SQLiteCommand("INSERT INTO `card_in_smi`(`cards_num`,`smi`,`date`,`times`,`link`,`pu`) VALUES(" + id + ", " + itm.number + ", '" + SqliteCommon.realEscapeString(dateTimePicker1.Value.ToString("yyyy-MM-dd")) + "', '" + SqliteCommon.realEscapeString(textBox1.Text) + "','" + SqliteCommon.realEscapeString(textBox2.Text) + "','" + (checkBox1.Checked == true ? "true" : "") + "');", conn);
                             comm.ExecuteNonQuery();
                             conn.Close();
                             this.Close();

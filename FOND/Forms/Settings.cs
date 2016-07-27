@@ -27,6 +27,7 @@ namespace FOND.Forms
         private void button2_Click(object sender, EventArgs e)
         {
             tableLayoutPanel2.Controls.Clear();
+            tableLayoutPanel2.Controls.Add(new Settings_Pages.moreSettings());
         }
 
         private void button3_Click(object sender, EventArgs e)

@@ -56,7 +56,7 @@ namespace FOND.masterPages
                         }
                         else
                         {
-                            comm = new SQLiteCommand("INSERT INTO smi(name, type, place) VALUES('" + p.getName() + "', '" + p.getType() + "','" + p.getPlace() + "')", bd_master.conn);
+                            comm = new SQLiteCommand("INSERT INTO smi(name, type, place) VALUES('" + SqliteCommon.realEscapeString(p.getName()) + "', '" + SqliteCommon.realEscapeString(p.getType()) + "','" + SqliteCommon.realEscapeString(p.getPlace()) + "')", bd_master.conn);
                             comm.ExecuteNonQuery();
                         }
                     }

@@ -6,11 +6,13 @@ using System.IO;
 using System.Windows.Forms;
 using Common;
 using FOND.Forms;
+using FOND.Extra;
 
 namespace FOND
 {
     public partial class MainForm : Form
     {
+        backup b = new backup();
         lastlog lg = new lastlog();
         public MainForm()
         {
@@ -18,6 +20,7 @@ namespace FOND
             button9.Image = new Bitmap(Properties.Resources.s_ico1, new Size(button9.ClientRectangle.Width - 7, button9.ClientRectangle.Height - 7));
             lg.add(Application.CompanyName + " || FOND™ Copyright © 2015-" + DateTime.Now.Year + " все права защищены || версия продукта: " + Application.ProductVersion);
             label4.Text = "v"+Application.ProductVersion;
+            connector.getInstance().appRunning = true;
         }
         private void MainForm_Shown(object sender, EventArgs e)
         {
@@ -66,10 +69,10 @@ namespace FOND
             this.Show();
         }
 
-        //проверка бд, ее структуры и значенй перед запуском приложения
+        //проверка бд, ее структуры и значенй перед запуском приложения, а также проверка всех прочих важных параметров
         private void datacheck()
         {
-            if (FOND.Properties.Settings.Default.db_file_dir == "" || !File.Exists(Properties.Settings.Default.db_file_dir))
+            if (Properties.Settings.Default.db_file_dir == "" || !File.Exists(Properties.Settings.Default.db_file_dir))
             {
                 bd_master Bd_master = new bd_master();
                 Bd_master.Owner = this;
@@ -78,41 +81,64 @@ namespace FOND
             }
             else
             {
-                var tnames = new string[] { "workers", "materialway", "material_theme", "material_presentation", "quality", "type", "speakerlvl", "regions", "parts", "smi", "card_in_smi" };
-                var connstr = "`name` = '" + tnames[0] + "'";
-                SQLiteConnection conn = new SQLiteConnection(string.Format("Data Source = {0};", Properties.Settings.Default.db_file_dir));
-                for (int i = 1; i < tnames.Length; i++)
+                try
                 {
-                    connstr += " OR `name` = '" + tnames[i] + "'";
-                }
-                SQLiteCommand comm = new SQLiteCommand("SELECT `name` FROM `sqlite_master` WHERE " + connstr, conn);
-                conn.Open();
-                try { comm.ExecuteNonQuery(); } catch (SQLiteException e) { MessageBox.Show(e.Message, "lol"); }
-                SQLiteDataReader dr = comm.ExecuteReader();
-                var p = 0;
-                foreach (DbDataRecord record in dr)
-                {
-                    var name = record["name"] + "";
-                    for (int i = 0; i < tnames.Length; i++)
+                    if (!dbCheck(Properties.Settings.Default.db_file_dir))
                     {
-                        if (name == tnames[i])
-                        {
-                            p++;
-                        }
+                        bd_master Bd_master = new bd_master();
+                        Bd_master.Owner = this;
+                        Bd_master.ShowDialog();
+                        Bd_master.Dispose();
                     }
-                }
-                conn.Close();
-                conn.Dispose();
-                if (p != tnames.Length)
+                }catch(Exception e)
                 {
-                    bd_master Bd_master = new bd_master();
-                    Bd_master.Owner = this;
-                    Bd_master.ShowDialog();
-                    Bd_master.Dispose();
+                    MessageBox.Show(e.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            if(Properties.Settings.Default.footer_text == "")
+            {
+                var dr = MessageBox.Show("Не заполнен закрывающий текст отчетов. Окрыть форму создания текста?", "Внимание!", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                if(dr == DialogResult.Yes)
+                {
+                    ExtraForms.TextEdit te = new ExtraForms.TextEdit();
+                    te.ShowDialog();
+                    te.Dispose();
                 }
             }
         }
-
+        public static bool dbCheck(string dbFile)
+        {
+            var tnames = new string[] { "workers", "materialway", "material_theme", "material_presentation", "quality", "type", "speakerlvl", "regions", "parts", "smi", "card_in_smi","cards" };
+            var connstr = "`name` = '" + tnames[0] + "'";
+            SQLiteConnection conn = new SQLiteConnection(string.Format("Data Source = {0};", Properties.Settings.Default.db_file_dir));
+            for (int i = 1; i < tnames.Length; i++)
+            {
+                connstr += " OR `name` = '" + tnames[i] + "'";
+            }
+            SQLiteCommand comm = new SQLiteCommand("SELECT `name` FROM `sqlite_master` WHERE " + connstr, conn);
+            conn.Open();
+            comm.ExecuteNonQuery();
+            SQLiteDataReader dr = comm.ExecuteReader();
+            var p = 0;
+            foreach (DbDataRecord record in dr)
+            {
+                var name = record["name"] + "";
+                for (int i = 0; i < tnames.Length; i++)
+                {
+                    if (name == tnames[i])
+                    {
+                        p++;
+                    }
+                }
+            }
+            conn.Close();
+            conn.Dispose();
+            if (p != tnames.Length)
+            {
+                return false;
+            }
+            else return true;
+        }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
@@ -167,6 +193,11 @@ namespace FOND
             {
                 MessageBox.Show("Данная форма уже открыта. Нельзя создавать более 1 формы одновременно", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            connector.getInstance().appRunning = false;
         }
     }
 }
