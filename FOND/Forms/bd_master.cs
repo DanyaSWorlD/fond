@@ -119,7 +119,7 @@ namespace FOND
             {
                 e.Cancel = false;
             }
-            bd_masterClose();
+            bd_masterClose?.Invoke();
         }
 
         private void bd_master_FormClosed(object sender, FormClosedEventArgs e)
