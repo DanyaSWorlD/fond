@@ -20,7 +20,7 @@ namespace FOND
         public bd_master()
         {
             InitializeComponent();
-            bd_master_lissener bl = bd_master_lissener.getInstance(this);
+            connector bl = connector.getInitializedWithBd_masterInstance(this);
             loadI();
             if (Settings.Default.db_file_dir != null && Settings.Default.db_file_dir != "") (pages[0] as page1).loaddbdir(Settings.Default.db_file_dir);
         }

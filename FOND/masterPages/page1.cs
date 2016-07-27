@@ -100,11 +100,7 @@ namespace FOND.masterPages
                     Settings.Default.Save();
                     return true;
                 }
-
             }
-
-
-
         }
         public void loaddbdir(string inp)
         {

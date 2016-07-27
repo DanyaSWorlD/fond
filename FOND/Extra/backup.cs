@@ -8,6 +8,11 @@ namespace FOND.Extra
 {
     class backup
     {
+        ToolStripMenuItem item1;
+        ToolStripMenuItem item2;
+        ContextMenuStrip menu1;
+        NotifyIcon noIco;
+        Common.lastlog lg;
         public backup()
         {
             bool IFC;
@@ -24,13 +29,44 @@ namespace FOND.Extra
         private delegate void bu();
         private void Backup()
         {
-            NotifyIcon noIco = new NotifyIcon();
-            noIco.Visible = true;
-            noIco.Icon = Properties.Resources.yavbttkp;
-            noIco.BalloonTipTitle = "FOND - Резервное копирование";
+            if (noIco == null)
+            {
+                noIco = new NotifyIcon();
+                noIco.Visible = true;
+                noIco.Icon = Properties.Resources.yavbttkp;
+                noIco.BalloonTipTitle = "FOND - Резервное копирование";
+                noIco.Click += new EventHandler(icon_click);
+            }
+            if (menu1 == null)
+            {
+                menu1 = new ContextMenuStrip();
+                menu1.ImageScalingSize = new System.Drawing.Size(20, 20);
+                menu1.Name = "menu1";
+                menu1.Size = new System.Drawing.Size(182, 58);
+                if (item1 == null)
+                {
+                    item1 = new ToolStripMenuItem();
+                    item1.Name = "open";
+                    item1.Size = new System.Drawing.Size(186, 26);
+                    item1.Text = "открыть форму";
+                }
+                if(item2 == null)
+                {
+                    item2 = new ToolStripMenuItem();
+                    item2.Name = "close";
+                    item2.Size = new System.Drawing.Size(186, 26);
+                    item2.Text = "отключить приложение";
+                }
+                if(!connector.getInstance().appRunning)
+                {
+                    menu1.Items.Add(item1);
+                }
+                menu1.Items.Add(item2);
+                menu1.ItemClicked += new ToolStripItemClickedEventHandler(menuItemClick);
+            }
             string bd_file = Properties.Settings.Default.db_file_dir;
             string bd_backup_file = Properties.Settings.Default.backup_file_dir;
-            Common.lastlog lg = new Common.lastlog();
+            lg = new Common.lastlog();
             if(bd_file!="")
             {
                 if(bd_backup_file!="")
@@ -54,14 +90,18 @@ namespace FOND.Extra
                         {
                             noIco.BalloonTipText = "Начато";
                             noIco.ShowBalloonTip(3000);
-                            Thread.Sleep(10000);
                             if (MainForm.dbCheck(bd_file))
                             {
                                 File.Delete(bd_backup_file);
+                                Thread.Sleep(60000);
                                 File.Copy(bd_file, bd_backup_file);
                                 f = new FileInfo(bd_backup_file);
                                 noIco.BalloonTipText = "Резервное копирование завершно\nРазмер файла: " + f.Length / 1024 + "кб";
                                 noIco.ShowBalloonTip(3000);
+                                noIco.Dispose();
+                                bu b = new bu(Backup);
+                                b.Invoke();
+
                             }
                         }
                         catch(Exception e) {
@@ -102,7 +142,31 @@ namespace FOND.Extra
             {
                 noIco.BalloonTipText = "Резервное копирование будет активировано после заполнения базы данных";
                 noIco.ShowBalloonTip(3000);
-                bd_master_lissener.getInstance().bd_formClosed += new bd_master_lissener.bd_formClosedEventHandler(Backup);
+                connector.getInstance().bd_formClosed += new connector.bd_formClosedEventHandler(Backup);
+            }
+        }
+        private void mainform_start()
+        {
+                if(!connector.getInstance().appRunning)
+            {
+                MainForm m = new MainForm();
+                m.Show();
+            }
+        }
+        private void icon_click(object sender, EventArgs e)
+        {
+            menu1.Show(Control.MousePosition);
+        } 
+        private void menuItemClick(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if(e.ClickedItem == item1)
+            {
+                mainform_start();
+            }
+            else
+            {
+                noIco.Visible = false;
+                Thread.CurrentThread.Abort();
             }
         }
     }

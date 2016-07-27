@@ -1,15 +1,15 @@
 ﻿    namespace Common
 {
-    public class SqliteCommon
+    public static class SqliteCommon
     {
-        public static string realEscapeString(string param)
+        public static string realEscapeString(this string param)
         {
             return param.Replace("'", "''");
         }
     }
-    public class HTMLcommon
+    public static class HTMLcommon
     {
-        public static string shield(string param)
+        public static string shield(this string param)
         {             
             param = param.Replace("<", "&lt;");
             param = param.Replace(">", "&gt;");
@@ -19,4 +19,12 @@
             return param;
         }
     }
+    public static class stringExtentions
+    {
+        public static string cutLastSymbol(this string s)
+        {
+            return s.Substring(0, s.Length - 1);
+        }
+    }
+
 }

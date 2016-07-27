@@ -46,12 +46,12 @@
             this.byExecutors = new System.Windows.Forms.Button();
             this.bySmi = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
+            this.userControl11 = new FOND.UserControl1();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.button9 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.userControl11 = new FOND.UserControl1();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -312,6 +312,16 @@
             this.button8.Text = "ПО ВЫСТУПЛЕНИЯМ РУКОВОДСТВА";
             this.button8.UseVisualStyleBackColor = true;
             // 
+            // userControl11
+            // 
+            this.userControl11.Dock = System.Windows.Forms.DockStyle.Right;
+            this.userControl11.Location = new System.Drawing.Point(1218, 485);
+            this.userControl11.Name = "userControl11";
+            this.userControl11.Size = new System.Drawing.Size(199, 34);
+            this.userControl11.TabIndex = 2;
+            this.userControl11.Load += new System.EventHandler(this.userControl11_Load);
+            this.userControl11.MouseHover += new System.EventHandler(this.userControl11_MouseHover);
+            // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.BackColor = System.Drawing.SystemColors.Control;
@@ -366,16 +376,6 @@
             this.label4.Size = new System.Drawing.Size(0, 17);
             this.label4.TabIndex = 4;
             // 
-            // userControl11
-            // 
-            this.userControl11.Dock = System.Windows.Forms.DockStyle.Right;
-            this.userControl11.Location = new System.Drawing.Point(1218, 485);
-            this.userControl11.Name = "userControl11";
-            this.userControl11.Size = new System.Drawing.Size(199, 34);
-            this.userControl11.TabIndex = 2;
-            this.userControl11.Load += new System.EventHandler(this.userControl11_Load);
-            this.userControl11.MouseHover += new System.EventHandler(this.userControl11_MouseHover);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -386,6 +386,7 @@
             this.Name = "MainForm";
             this.Text = "Автоматизированная информационная система ГУ МВД России по Краснодарскому краю «Ф" +
     "онд»";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

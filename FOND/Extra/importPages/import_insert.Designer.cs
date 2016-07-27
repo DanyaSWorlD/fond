@@ -1,6 +1,6 @@
-﻿namespace FOND.Settings_Pages
+﻿namespace FOND.Extra.importPages
 {
-    partial class moreSettings
+    partial class import_insert
     {
         /// <summary> 
         /// Обязательная переменная конструктора.
@@ -28,44 +28,55 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
+            this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(3, 78);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(459, 30);
+            this.progressBar1.TabIndex = 0;
+            this.progressBar1.UseWaitCursor = true;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label1.Location = new System.Drawing.Point(3, 10);
+            this.label1.Location = new System.Drawing.Point(3, 58);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(190, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Запустить редактор текста";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            this.label1.MouseEnter += new System.EventHandler(this.label1_MouseEnter);
-            this.label1.MouseLeave += new System.EventHandler(this.label1_MouseLeave);
+            this.label1.Size = new System.Drawing.Size(73, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Прогресс:";
+            // 
+            // progressBar2
+            // 
+            this.progressBar2.Location = new System.Drawing.Point(3, 135);
+            this.progressBar2.Name = "progressBar2";
+            this.progressBar2.Size = new System.Drawing.Size(459, 30);
+            this.progressBar2.TabIndex = 0;
+            this.progressBar2.UseWaitCursor = true;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label2.Location = new System.Drawing.Point(3, 39);
+            this.label2.Location = new System.Drawing.Point(3, 115);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(257, 17);
+            this.label2.Size = new System.Drawing.Size(0, 17);
             this.label2.TabIndex = 1;
-            this.label2.Text = "импорт данных из бд Microsoft Access";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            this.label2.MouseEnter += new System.EventHandler(this.label1_MouseEnter);
-            this.label2.MouseLeave += new System.EventHandler(this.label1_MouseLeave);
             // 
-            // moreSettings
+            // import_insert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "moreSettings";
-            this.Size = new System.Drawing.Size(1012, 448);
+            this.Controls.Add(this.progressBar2);
+            this.Controls.Add(this.progressBar1);
+            this.Name = "import_insert";
+            this.Size = new System.Drawing.Size(465, 374);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -73,7 +84,9 @@
 
         #endregion
 
+        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ProgressBar progressBar2;
         private System.Windows.Forms.Label label2;
     }
 }

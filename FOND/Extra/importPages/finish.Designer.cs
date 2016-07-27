@@ -1,6 +1,6 @@
-﻿namespace FOND.Settings_Pages
+﻿namespace FOND.Extra.importPages
 {
-    partial class moreSettings
+    partial class finish
     {
         /// <summary> 
         /// Обязательная переменная конструктора.
@@ -29,51 +29,30 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label1.Location = new System.Drawing.Point(3, 10);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(16, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(190, 17);
+            this.label1.Size = new System.Drawing.Size(300, 88);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Запустить редактор текста";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            this.label1.MouseEnter += new System.EventHandler(this.label1_MouseEnter);
-            this.label1.MouseLeave += new System.EventHandler(this.label1_MouseLeave);
+            this.label1.Text = "Загрузка завершена!\r\nБаза настроена и готова к работе.";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label2.Location = new System.Drawing.Point(3, 39);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(257, 17);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "импорт данных из бд Microsoft Access";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            this.label2.MouseEnter += new System.EventHandler(this.label1_MouseEnter);
-            this.label2.MouseLeave += new System.EventHandler(this.label1_MouseLeave);
-            // 
-            // moreSettings
+            // finish
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "moreSettings";
-            this.Size = new System.Drawing.Size(1012, 448);
+            this.Name = "finish";
+            this.Size = new System.Drawing.Size(363, 277);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
     }
 }

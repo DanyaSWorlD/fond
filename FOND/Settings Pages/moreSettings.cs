@@ -32,5 +32,10 @@ namespace FOND.Settings_Pages
             te.Show();
         }
 
+        private void label2_Click(object sender, EventArgs e)
+        {
+            Extra.import i = new Extra.import();
+           i.ShowDialog();
+        }
     }
 }
