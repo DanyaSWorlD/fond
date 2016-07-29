@@ -1108,17 +1108,11 @@ namespace FOND
         private void getMnMId()
         {
             SQLiteCommand comm = new SQLiteCommand("SELECT MAX(id) FROM cards;", conn);
-            SQLiteDataReader dr = comm.ExecuteReader();
-            foreach (DbDataRecord ddr in dr)
-            {
-                maxId = (int)(long)ddr[0];
-            }
-            comm = new SQLiteCommand("SELECT MIN(id) FROM cards;", conn);
-            dr = comm.ExecuteReader();
-            foreach (DbDataRecord ddr in dr)
-            {
-                minId = (int)(long)ddr[0];
-            }
+            var pr = comm.ExecuteScalar();
+            maxId = pr == null ? 0 : (int)(long)pr;
+            comm.CommandText = "SELECT MIN(id) FROM cards;";
+            pr = comm.ExecuteScalar();
+            minId = pr == null ? 0 : (int)(long)pr;
         }
 
         #region CHANGE ID BY TEXTBOX

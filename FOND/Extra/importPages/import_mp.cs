@@ -12,6 +12,7 @@ namespace FOND.Extra.importPages
 {
     public partial class import_mp : UserControl,import.import_page
     {
+        private string[] connection = new string[] {"Microsoft.Jet.OLEDB.4.0","Microsoft.ACE.OLEDB.12.0" };
         delegate void container();
         container c;
         private bool nextButton = false;
@@ -42,7 +43,7 @@ namespace FOND.Extra.importPages
             }
             try
             {
-                import.OleDbconn = new System.Data.OleDb.OleDbConnection(string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\"{0}\";", textBox1.Text));
+                import.OleDbconn = new System.Data.OleDb.OleDbConnection(string.Format("Provider={0};Data Source=\"{1}\";", textBox1.Text));
                 import.conn = new System.Data.SQLite.SQLiteConnection(string.Format("Data Source = {0};", file1));
                 {
                     import.OleDbconn.Open();
@@ -52,6 +53,7 @@ namespace FOND.Extra.importPages
             }
             catch(Exception e)
             {
+                MessageBox.Show(e.Message, "Error!");
                 new Common.lastlog().add("import: " + e.Message);
                 if (import.OleDbconn.State == ConnectionState.Open)
                      import.OleDbconn.Close();
