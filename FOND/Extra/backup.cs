@@ -3,7 +3,6 @@ using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
 using System.Threading;
-
 namespace FOND.Extra
 {
     class backup
@@ -92,16 +91,19 @@ namespace FOND.Extra
                             noIco.ShowBalloonTip(3000);
                             if (MainForm.dbCheck(bd_file))
                             {
-                                File.Delete(bd_backup_file);
-                                Thread.Sleep(60000);
-                                File.Copy(bd_file, bd_backup_file);
+                                File.Copy(bd_file, bd_backup_file,true);
                                 f = new FileInfo(bd_backup_file);
                                 noIco.BalloonTipText = "Резервное копирование завершно\nРазмер файла: " + f.Length / 1024 + "кб";
                                 noIco.ShowBalloonTip(3000);
+                                noIco.Visible = false;
                                 noIco.Dispose();
                                 bu b = new bu(Backup);
                                 b.Invoke();
 
+                            }
+                            else
+                            {
+                                throw new Exception("Файл базы данных повреждён");
                             }
                         }
                         catch(Exception e) {
@@ -125,10 +127,14 @@ namespace FOND.Extra
                             Directory.CreateDirectory(bd_backup_file);
                         }
                         bd_backup_file += "/" + encriptor(bd_file);
-                        File.Copy(bd_file, bd_backup_file);
+                        File.Copy(bd_file, bd_backup_file,true);
                         FileInfo f = new FileInfo(bd_backup_file);
                         noIco.BalloonTipText = "Резервное копирование завершно\nРазмер файла: " + f.Length / 1024 + "кб";
-                        noIco.ShowBalloonTip(3000); 
+                        noIco.ShowBalloonTip(3000);
+                        noIco.Visible = false;
+                        noIco.Dispose();
+                        bu b = new bu(Backup);
+                        b.Invoke();
                     }
                     catch (Exception e)
                     {

@@ -134,9 +134,9 @@
             this.comboBox1.Items.AddRange(new object[] {
             "Access 97 - 2003",
             "Access 2007-20016"});
-            this.comboBox1.Location = new System.Drawing.Point(277, 227);
+            this.comboBox1.Location = new System.Drawing.Point(297, 227);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
+            this.comboBox1.Size = new System.Drawing.Size(145, 24);
             this.comboBox1.TabIndex = 30;
             // 
             // label4

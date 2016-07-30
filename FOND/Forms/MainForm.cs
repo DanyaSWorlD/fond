@@ -12,7 +12,7 @@ namespace FOND
 {
     public partial class MainForm : Form
     {
-        backup b = new backup();
+        //backup b = new backup();
         lastlog lg = new lastlog();
         public MainForm()
         {
