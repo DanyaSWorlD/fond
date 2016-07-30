@@ -57,11 +57,8 @@ namespace FOND
             if (id == -1)
             {
                 SQLiteCommand comm = new SQLiteCommand("SELECT MAX(id) FROM cards", conn);
-                SQLiteDataReader dr = comm.ExecuteReader();
-                foreach (DbDataRecord dbdr in dr)
-                {
-                    id = (int)(long)dbdr[0];
-                }
+                object dr = comm.ExecuteScalar();
+                    id = dr == DBNull.Value ? 0 : (int)(long)dr;
             }
             MultyThreadChangeId(id);
             loaddata();
@@ -1108,17 +1105,11 @@ namespace FOND
         private void getMnMId()
         {
             SQLiteCommand comm = new SQLiteCommand("SELECT MAX(id) FROM cards;", conn);
-            SQLiteDataReader dr = comm.ExecuteReader();
-            foreach (DbDataRecord ddr in dr)
-            {
-                maxId = (int)(long)ddr[0];
-            }
-            comm = new SQLiteCommand("SELECT MIN(id) FROM cards;", conn);
-            dr = comm.ExecuteReader();
-            foreach (DbDataRecord ddr in dr)
-            {
-                minId = (int)(long)ddr[0];
-            }
+            object pr = comm.ExecuteScalar();
+            maxId = pr == DBNull.Value ? 0 : (int)(long)pr;
+            comm.CommandText = "SELECT MIN(id) FROM cards;";
+            pr = comm.ExecuteScalar();
+            minId = pr == DBNull.Value ? 0 : (int)(long)pr;
         }
 
         #region CHANGE ID BY TEXTBOX
